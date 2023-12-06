@@ -1,14 +1,14 @@
 import React,{useEffect, useState} from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import MobileStepper from '@mui/material/MobileStepper';
+// import MobileStepper from '@mui/material/MobileStepper';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import SwipeableViews from 'react-swipeable-views';
-import { autoPlay } from 'react-swipeable-views-utils';
+// import SwipeableViews from 'react-swipeable-views';
+// import { autoPlay } from 'react-swipeable-views-utils';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -27,7 +27,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import ListaEntradasSaidas from './listaEntradasSaidas';
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+// const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 function Contas() {
   const [mes, setMes] = useState<mesType[]>([])
@@ -81,7 +81,7 @@ function Contas() {
           {mes[activeStep]?.mesReferente}
         </Typography>
       </Paper>
-      <AutoPlaySwipeableViews
+      {/* <AutoPlaySwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={activeStep}
         onChangeIndex={handleStepChange}
@@ -91,18 +91,8 @@ function Contas() {
           <div  key={elem.mesReferente}>
             <Card sx={{ minWidth: 275 }}>
               <CardContent>
-                {/* <div>Entradas</div>
-                <div className='entradas'>{elem.ganhos.map((g, keyG)=>{
-                  return <div>{g.nome} - {formatoMonetario(g.valor)}</div>
-                })}</div>
-                <div>Saidas</div>
-                <div>{elem.contas_A_Pagar.map((g, keyG)=>{
-                  return <div className='saidas'>{g.nome} - {formatoMonetario(g.valor)}</div>
-                })}</div> */}
                 <ListaEntradasSaidas list={elem.ganhos} tipo={"entrada"} handleAtualiza={handleAtualiza}/>
                 <ListaEntradasSaidas list={elem.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
-                
-                
               </CardContent>
               <CardActions>
                 <ModalAdicionarEntradas mes={elem} handleAtualiza={handleAtualiza}/>
@@ -140,7 +130,7 @@ function Contas() {
             Anterior
           </Button>
         }
-      />
+      /> */}
     </Box>
   );
 }
