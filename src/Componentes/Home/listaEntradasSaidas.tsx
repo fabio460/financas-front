@@ -4,7 +4,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
 import PropaneTankIcon from '@mui/icons-material/PropaneTank';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
@@ -31,13 +30,13 @@ export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:e
                         <ListItemAvatar>
                             <Avatar>
                                 {
-                                   ignoreMaiusMinusAcent(e.nome).includes(("cart")) ? <CreditCardIcon />:
+                                   ignoreMaiusMinusAcent(e.nome).includes(("cartao")) || ignoreMaiusMinusAcent(e.nome).includes(("fatura")) ? <CreditCardIcon />:
                                    ignoreMaiusMinusAcent(e.nome).includes("aluguel")? <MapsHomeWorkIcon/>:
                                    ignoreMaiusMinusAcent(e.nome).includes("internet")?<WifiIcon/>:
                                    ignoreMaiusMinusAcent(e.nome).includes("salario")?<CurrencyExchangeIcon/> :
                                    ignoreMaiusMinusAcent(e.nome).includes("gas")? <PropaneTankIcon/>:
                                    ignoreMaiusMinusAcent(e.nome).includes("luz")?<EmojiObjectsIcon/>:
-                                   ignoreMaiusMinusAcent(e.nome).includes("tv")||ignoreMaiusMinusAcent(e.nome).includes("genesio")?<LiveTvIcon/>:
+                                   ignoreMaiusMinusAcent(e.nome).includes("tv") || ignoreMaiusMinusAcent(e.nome).includes("genesio")?<LiveTvIcon/>:
                                    ignoreMaiusMinusAcent(e.nome).includes("dizimo")? <RequestQuoteIcon/>:
                                    <WorkIcon/>
                                 }
