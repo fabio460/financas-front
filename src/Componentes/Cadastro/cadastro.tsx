@@ -58,7 +58,7 @@ export default function Cadastro() {
         {
           error && <div style={{color:"#d32f2f"}}>Falha ao cadastrar, este email já existe!</div>
         }
-        <Button className='btnLogin' onClick={handleLogin} sx={{mt:4,height:45}} variant='contained'>
+        <Button className='btnGlobal' onClick={handleLogin} sx={{mt:4,height:45}} variant='contained'>
            {
              loading ? <CircularProgress size={30} sx={{color:"white"}}/>:<div>Cadastrar</div>
            }  

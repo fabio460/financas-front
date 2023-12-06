@@ -30,7 +30,7 @@ export default function Login() {
             {
               error && <div style={{color:"#d32f2f"}}>Usuário ou senha inválidos</div>
             }
-            <Button className='btnLogin' onClick={handleLogin} sx={{mt:6,height:45}} variant='contained'>
+            <Button className='btnGlobal' onClick={handleLogin} sx={{mt:6,height:45}} variant='contained'>
                {
                  loading ? <CircularProgress size={30} sx={{color:"white"}}/>:<div>Entrar</div>
                }  
