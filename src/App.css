@@ -7,6 +7,20 @@
   outline-style: none;
   
 }
+.inputGlobal{
+  border: none;
+  background-color: transparent;
+  outline-style: none;
+  min-width: 90%;
+  margin: 4%;
+
+}
+.inputGlobalContainer{
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 9px;
+  width: 100%;
+  margin: 16px 0px;
+}
 .btnGlobal{
   background-color: #03a9f4;
 }

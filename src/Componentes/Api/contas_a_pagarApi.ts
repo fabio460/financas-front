@@ -1,5 +1,5 @@
 import { link } from "./link";
-export const listarContas_a_Pagar = async()=>{
+export const listarContas_a_PagarApi = async()=>{
     let response = "" 
     await fetch(link+"contasapagar/listarContas_a_pagar",{
      headers:{
@@ -12,7 +12,7 @@ export const listarContas_a_Pagar = async()=>{
     })
     return response;
 }
-export const adicionarContas_a_Pagar = async(nome:string, valor:number, idMes:string)=>{
+export const adicionarContas_a_PagarApi = async(nome:string, valor:number, idMes:string)=>{
     let response = "" 
     await fetch(link+"contasapagar/adicionarcontas_a_pagar",{
      headers:{
@@ -28,7 +28,7 @@ export const adicionarContas_a_Pagar = async(nome:string, valor:number, idMes:st
     return response;
 }
 
-export const deletarContas_a_Pagar = async(id:string)=>{
+export const deletarContas_a_PagarApi = async(id:string)=>{
     let response = "" 
     await fetch(link+"contasapagar/deletarcontas_a_pagar",{
      headers:{
@@ -45,7 +45,7 @@ export const deletarContas_a_Pagar = async(id:string)=>{
 }
 
 
-export const atualizarContas_a_Pagar = async(id:string, nome:string, valor:number, idMes:string)=>{
+export const atualizarContas_a_PagarApi = async(id:string, nome:string, valor:number, idMes:string)=>{
     let response = "" 
     await fetch(link+"contasapagar/atualizarcontas_a_pagar",{
      headers:{

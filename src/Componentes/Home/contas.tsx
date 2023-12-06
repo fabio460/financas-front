@@ -13,53 +13,43 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { listarMesApi } from '../Api/mesApi';
-
+import ModalAdicionarConta from './modalAdicionarConta';
+import { mesType } from '../../types';
+import ModalAdicionarEntradas from './modalAdicionarEntradas';
+import "./home.css"
+import { formatoMonetario, getSobra } from '../../metodosUteis';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import ImageIcon from '@mui/icons-material/Image';
+import WorkIcon from '@mui/icons-material/Work';
+import BeachAccessIcon from '@mui/icons-material/BeachAccess';
+import ListaEntradasSaidas from './listaEntradasSaidas';
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 function Contas() {
-  const [mes, setMes] = useState<{mesReferente:string, conteudo:string}[]>([])
-  const images = [
-    {
-      label: 'Janeiro',
-      imgPath:
-        'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-    },
-    {
-      label: 'Fevereiro',
-      imgPath:
-        'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-    },
-    {
-      label: 'Março',
-      imgPath:
-        'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
-    },
-    {
-      label: 'Abril',
-      imgPath:
-        'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-    },
-  ];
-  
-  let lista = [
-     {mesReferente:"Jabeiro",conteudo:"conteudos "},
-    // {mesReferente:"Fevereiro",conteudo:"conteudos 2"},
-    // {mesReferente:"Março",conteudo:"conteudos 3"},
-  ]
+  const [mes, setMes] = useState<mesType[]>([])
+  const [atualiza, setatualiza] = useState(false)
   useEffect(()=>{
     async function getMes() {
       const res:any = await listarMesApi()
-      setMes(res)
+      setMes(res.reverse())
     }
     getMes()
-  },[])
-  console.log(mes)
+  },[atualiza])
+  const handleAtualiza = ()=>{
+    setatualiza(!atualiza)
+  }
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(localStorage.getItem("step") ? parseInt(localStorage.getItem("step") as string):0);
   const maxSteps = mes.length;
+  localStorage.setItem("step",activeStep.toString())
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    //localStorage.setItem("step",JSON.stringify((prevActiveStep) => prevActiveStep + 1))
   };
 
   const handleBack = () => {
@@ -68,6 +58,7 @@ function Contas() {
 
   const handleStepChange = (step: number) => {
    // setActiveStep(step);
+   
   };
 
   return (
@@ -78,14 +69,17 @@ function Contas() {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          height: 50,
+          height: 40,
           pl: 2,
           bgcolor: 'background.default',
           textAlign:"center",
           justifyContent:"center"
         }}
       >
-        <Typography  >{mes[activeStep]?.mesReferente}</Typography>
+        <Typography  >
+          <div>Sobra {formatoMonetario(getSobra(mes[activeStep]?.ganhos, mes[activeStep]?.contas_A_Pagar))}</div>
+          {mes[activeStep]?.mesReferente}
+        </Typography>
       </Paper>
       <AutoPlaySwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -95,42 +89,26 @@ function Contas() {
       >
         {mes.map((elem, index) => (
           <div  key={elem.mesReferente}>
-          <Card sx={{ minWidth: 275 }}>
-            <CardContent>
-              {elem.conteudo}
-              {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                Word of the Day
-              </Typography>
-              <Typography variant="h5" component="div">
+            <Card sx={{ minWidth: 275 }}>
+              <CardContent>
+                {/* <div>Entradas</div>
+                <div className='entradas'>{elem.ganhos.map((g, keyG)=>{
+                  return <div>{g.nome} - {formatoMonetario(g.valor)}</div>
+                })}</div>
+                <div>Saidas</div>
+                <div>{elem.contas_A_Pagar.map((g, keyG)=>{
+                  return <div className='saidas'>{g.nome} - {formatoMonetario(g.valor)}</div>
+                })}</div> */}
+                <ListaEntradasSaidas list={elem.ganhos} tipo={"entrada"} handleAtualiza={handleAtualiza}/>
+                <ListaEntradasSaidas list={elem.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
                 
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                adjective
-              </Typography>
-              <Typography variant="body2">
-                well meaning and kindly.
-                <br />
-                {'"a benevolent smile"'}
-              </Typography> */}
-            </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
-            {/* {Math.abs(activeStep - index) <= 2 ? (
-              <Box
-                component="img"
-                sx={{
-                  height: 255,
-                  display: 'block',
-                  maxWidth: 400,
-                  overflow: 'hidden',
-                  width: '100%',
-                }}
-                src={step.imgPath}
-                alt={step.label}
-              />
-            ) : null} */}
+                
+              </CardContent>
+              <CardActions>
+                <ModalAdicionarEntradas mes={elem} handleAtualiza={handleAtualiza}/>
+                <ModalAdicionarConta mes={elem}  handleAtualiza={handleAtualiza}/>
+              </CardActions>
+            </Card>
           </div>
         ))}
       </AutoPlaySwipeableViews>
