@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import "./carousel.css"
 import { mesType } from '../../../types'
 import Card from '@mui/material/Card';
+import DeleteIcon from '@mui/icons-material/Delete';
 import CardActions from '@mui/material/CardActions';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -10,6 +11,7 @@ import ListaEntradasSaidas from '../listaEntradasSaidas';
 import ModalAdicionarEntradas from '../modalAdicionarEntradas';
 import ModalAdicionarConta from '../modalAdicionarConta';
 import IconButton from '@mui/material/IconButton';
+import ModalDeletarMes from '../modalDeletarMes';
 
 export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtualiza:any}) {
   const [active, setActive] = useState(localStorage.getItem("step") ? parseInt(localStorage.getItem("step") as string):0)
@@ -39,11 +41,13 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
         </IconButton>
       </div>
         <div className={`slideContainer`} style={{marginLeft:`${-active*400}px`}}>
-           {
-            mes.map((e,key)=>{
-              return <div key={key} className='slide' style={{color:"black"}}>
-                {/* <h5 style={{textAlign:"center"}}>{e.mesReferente}</h5> */}
+           { mes.length === 0 ? <div style={{display:"flex", justifyContent:"center", marginTop:"30px"}}>Não há dados</div>:
+             mes.map((e,key)=>{
+               return <div key={key} className='slide' style={{color:"black"}}>
                 <Card sx={{ minWidth: 275 }}>
+                  <div style={{display:"flex", justifyContent:"flex-end", margin:"3px"}}>
+                    <ModalDeletarMes idMes={e.id} />
+                  </div>
                   <CardContent>
                     <ListaEntradasSaidas list={e.ganhos} tipo={"entrada"} handleAtualiza={handleAtualiza}/>
                     <ListaEntradasSaidas list={e.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
@@ -52,7 +56,7 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
                     <ModalAdicionarEntradas mes={e} handleAtualiza={handleAtualiza}/>
                     <ModalAdicionarConta mes={e}  handleAtualiza={handleAtualiza}/>
                   </CardActions>
-              </Card>
+                </Card>
               </div>
             })
            }
