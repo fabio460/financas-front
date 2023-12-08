@@ -67,7 +67,7 @@ function Contas() {
 
   return (
     <div>
-      {/* <Carousel mes={mes} handleAtualiza={handleAtualiza}/> */}
+      <Carousel mes={mes} handleAtualiza={handleAtualiza}/>
     </div>
   );
 }
