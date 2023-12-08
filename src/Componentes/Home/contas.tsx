@@ -66,67 +66,8 @@ function Contas() {
 
 
   return (
-    // <Box sx={{ flexGrow: 1 }}>
-    //   <Paper
-    //     square
-    //     elevation={0}
-    //     sx={{
-    //       display: 'flex',
-    //       alignItems: 'center',
-    //       height: 40,
-    //       pl: 2,
-    //       bgcolor: 'background.default',
-    //       textAlign:"center",
-    //       justifyContent:"center"
-    //     }}
-    //   >
-    //     <Typography  >
-    //       <div>Sobra {formatoMonetario(getSobra(mes[activeStep]?.ganhos, mes[activeStep]?.contas_A_Pagar))}</div>
-    //       {mes[activeStep]?.mesReferente}
-    //     </Typography>
-    //   </Paper>
-    //   {/* <AutoPlaySwipeableViews
-    //     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-    //     index={activeStep}
-    //     onChangeIndex={handleStepChange}
-    //     enableMouseEvents
-    //   >
-    //   </AutoPlaySwipeableViews>
-    //   <MobileStepper
-    //     steps={maxSteps}
-    //     position="static"
-    //     activeStep={activeStep}
-    //     nextButton={
-      //       <Button
-    //         size="small"
-    //         onClick={handleNext}
-    //         disabled={activeStep === maxSteps - 1}
-    //       >
-    //         Próximo
-    //         {theme.direction === 'rtl' ? (
-      //           <KeyboardArrowLeft />
-      //         ) : (
-        //           <KeyboardArrowRight />
-        //         )}
-        //       </Button>
-        //     }
-        //     backButton={
-    //       <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-    //         {theme.direction === 'rtl' ? (
-      //           <KeyboardArrowRight />
-      //         ) : (
-        //           <KeyboardArrowLeft />
-        //         )}
-        //         Anterior
-        //       </Button>
-        //     }
-    //   /> */}
-
-
-      
-    // </Box>
     <div>
-      <Carousel mes={mes} handleAtualiza={handleAtualiza}/>
+      {/* <Carousel mes={mes} handleAtualiza={handleAtualiza}/> */}
     </div>
   );
 }
