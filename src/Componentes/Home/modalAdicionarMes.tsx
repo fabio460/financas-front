@@ -42,7 +42,7 @@ export default function ModalAdicionarMes({id}:{id:string}) {
   const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto"]
   return (
     <React.Fragment>
-        <Box sx={{ '& > :not(style)': { m: 1, position:"absolute", bottom:"2%", right:"2%" } }}>
+        <Box sx={{ '& > :not(style)': { m: 0, position:"fixed", bottom:"15px", right:"15px" } }}>
             <Fab sx={{bgcolor:corLaranja}} color="primary" aria-label="add" onClick={handleClickOpen}>
                 <AddIcon />
             </Fab>
