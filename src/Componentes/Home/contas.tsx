@@ -37,7 +37,7 @@ function Contas() {
   useEffect(()=>{
     async function getMes() {
       const res:any = await listarMesApi()
-      setMes(res.reverse())
+      setMes(res)
     }
     getMes()
   },[atualiza])

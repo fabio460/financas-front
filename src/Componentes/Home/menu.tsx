@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ModalDeletarEntradaSaida from './modalDeletarEntSaida';
+import { corDosItens } from '../Cores';
 
 
 export default function FadeMenu({id, tipo, handleAtualiza}:{id:string, tipo:string, handleAtualiza:any}) {
@@ -26,6 +27,7 @@ export default function FadeMenu({id, tipo, handleAtualiza}:{id:string, tipo:str
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        sx={{color:corDosItens}}
       >
         <MoreVertIcon/>
       </IconButton>

@@ -1,3 +1,5 @@
+
+import Divider from '@mui/material/Divider';
 import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -17,6 +19,7 @@ import { entradasSaidasType } from '../../types';
 import { formatoMonetario } from '../../metodosUteis';
 import FadeMenu from './menu';
 import { ignoreMaiusMinusAcent } from "../../metodosUteis";
+import { corDosItens } from '../Cores';
 
 export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:entradasSaidasType, tipo:string, handleAtualiza:any}) {
  
@@ -28,16 +31,16 @@ export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:e
                 <ListItem sx={{p:0, display:""}} key={key}>
                     <div style={{color:tipo==="entrada"? "green" : "red" ,display:"flex", justifyContent:"space-between", width:"100%", alignItems:"center"}}>
                         <ListItemAvatar>
-                            <Avatar>
+                            <Avatar sx={{bgcolor:corDosItens}}>
                                 {
-                                   ignoreMaiusMinusAcent(e.nome).includes(("cartao")) || ignoreMaiusMinusAcent(e.nome).includes(("fatura")) ? <CreditCardIcon />:
-                                   ignoreMaiusMinusAcent(e.nome).includes("aluguel")? <MapsHomeWorkIcon/>:
-                                   ignoreMaiusMinusAcent(e.nome).includes("internet")?<WifiIcon/>:
-                                   ignoreMaiusMinusAcent(e.nome).includes("salario")?<CurrencyExchangeIcon/> :
-                                   ignoreMaiusMinusAcent(e.nome).includes("gas")? <PropaneTankIcon/>:
-                                   ignoreMaiusMinusAcent(e.nome).includes("luz")?<EmojiObjectsIcon/>:
-                                   ignoreMaiusMinusAcent(e.nome).includes("tv") || ignoreMaiusMinusAcent(e.nome).includes("genesio")?<LiveTvIcon/>:
-                                   ignoreMaiusMinusAcent(e.nome).includes("dizimo")? <RequestQuoteIcon/>:
+                                   ignoreMaiusMinusAcent(e.nome).includes(("cartao")) || ignoreMaiusMinusAcent(e.nome).includes(("fatura")) ? <CreditCardIcon  />:
+                                   ignoreMaiusMinusAcent(e.nome).includes("aluguel") ? <MapsHomeWorkIcon />:
+                                   ignoreMaiusMinusAcent(e.nome).includes("internet") ? <WifiIcon />:
+                                   ignoreMaiusMinusAcent(e.nome).includes("salario") ? <CurrencyExchangeIcon/> :
+                                   ignoreMaiusMinusAcent(e.nome).includes("gas") ? <PropaneTankIcon />:
+                                   ignoreMaiusMinusAcent(e.nome).includes("luz") ? <EmojiObjectsIcon />:
+                                   ignoreMaiusMinusAcent(e.nome).includes("tv") || ignoreMaiusMinusAcent(e.nome).includes("genesio")?<LiveTvIcon />:
+                                   ignoreMaiusMinusAcent(e.nome).includes("dizimo") ? <RequestQuoteIcon />:
                                    <WorkIcon/>
                                 }
                             </Avatar>
@@ -48,7 +51,9 @@ export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:e
                 </ListItem>
             )
         })
-      }  
+    }  
+    <Divider sx={{bgcolor:'ButtonHighlight'}}/>
+      
     </List>
   );
 }

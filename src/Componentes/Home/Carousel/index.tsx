@@ -12,6 +12,8 @@ import ModalAdicionarEntradas from '../modalAdicionarEntradas';
 import ModalAdicionarConta from '../modalAdicionarConta';
 import IconButton from '@mui/material/IconButton';
 import ModalDeletarMes from '../modalDeletarMes';
+import { formatoMonetario, getSobra } from '../../../metodosUteis';
+import { corDosItens } from '../../Cores';
 
 export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtualiza:any}) {
   const [active, setActive] = useState(localStorage.getItem("step") ? parseInt(localStorage.getItem("step") as string):0)
@@ -32,14 +34,16 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
     <div>
       <div className='slides'>
       <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-        <IconButton aria-label="delete" onClick={anterior} disabled={active === 0 ? true : false}>
+        <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={active === 0 ? true : false}>
           <ArrowBackIosNewIcon />
         </IconButton>
         <div style={{textAlign:"center", width:"90px"}}>{mes[active]?.mesReferente}</div>
-        <IconButton onClick={proximo} disabled={active === (mes.length - 1) ? true : false}>
+        <IconButton sx={{color:corDosItens}} onClick={proximo} disabled={active === (mes.length - 1) ? true : false}>
           <ArrowForwardIosIcon/>
         </IconButton>
       </div>
+      <div style={{textAlign:"center",marginTop:"20px"}}>Sobra {formatoMonetario(getSobra(mes[active]?.ganhos, mes[active]?.contas_A_Pagar))}</div>
+
         <div className={`slideContainer`} style={{marginLeft:`${-active*400}px`}}>
            { mes.length === 0 ? <div style={{display:"flex", justifyContent:"center", marginTop:"30px"}}>Não há dados</div>:
              mes.map((e,key)=>{

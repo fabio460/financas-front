@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { adicionarMesApi } from '../Api/mesApi';
+import { corLaranja } from '../Cores';
 
 export default function ModalAdicionarMes({id}:{id:string}) {
   const [open, setOpen] = React.useState(false);
@@ -31,7 +32,9 @@ export default function ModalAdicionarMes({id}:{id:string}) {
 
   const adicionarMes = async()=>{
      const r = await adicionarMesApi(id, Mes);
-     alert(JSON.stringify(r))
+     alert(JSON.stringify(r)+ r.length)
+     localStorage.setItem("step",JSON.stringify(r.length-1))
+      window.location.reload()
      handleClose()
   }
   
@@ -40,7 +43,7 @@ export default function ModalAdicionarMes({id}:{id:string}) {
   return (
     <React.Fragment>
         <Box sx={{ '& > :not(style)': { m: 1, position:"absolute", bottom:"2%", right:"2%" } }}>
-            <Fab color="primary" aria-label="add" onClick={handleClickOpen}>
+            <Fab sx={{bgcolor:corLaranja}} color="primary" aria-label="add" onClick={handleClickOpen}>
                 <AddIcon />
             </Fab>
         </Box>
