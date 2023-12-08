@@ -1,5 +1,5 @@
 .slides{
-    width: 400px;
+    max-width: 400px;
     overflow-x: scroll;
     overflow: hidden;
 }
@@ -12,4 +12,21 @@
     display: flex;
     transition: 0.5s;
     width: 100000px;
+}
+@media (max-width:400px) {
+    .slides{
+        width: 300px;
+    }
+    .slide{
+        width: 300px;
+    }
+}
+
+@media (max-width:500) {
+    .slide{
+        width: 98vw;
+    }
+    .slides{
+        width: 95%;
+    }
 }

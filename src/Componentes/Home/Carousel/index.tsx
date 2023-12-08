@@ -30,21 +30,26 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
       localStorage.setItem("step",JSON.stringify(active - 1))
     }
   }
+  const sliderStyle = {
+    "marginLeft":`${-active*300}px`,
+    "@media (max-width:400px)":{
+       "marginLeft":`${-active*300}px`
+    }
+  }
   return (
     <div>
       <div className='slides'>
-      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-        <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={active === 0 ? true : false}>
-          <ArrowBackIosNewIcon />
-        </IconButton>
-        <div style={{textAlign:"center", width:"90px"}}>{mes[active]?.mesReferente}</div>
-        <IconButton sx={{color:corDosItens}} onClick={proximo} disabled={active === (mes.length - 1) ? true : false}>
-          <ArrowForwardIosIcon/>
-        </IconButton>
-      </div>
-      <div style={{textAlign:"center",marginTop:"20px"}}>Sobra {formatoMonetario(getSobra(mes[active]?.ganhos, mes[active]?.contas_A_Pagar))}</div>
-
-        <div className={`slideContainer`} style={{marginLeft:`${-active*400}px`}}>
+        <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+          <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={active === 0 ? true : false}>
+            <ArrowBackIosNewIcon />
+          </IconButton>
+          <div style={{textAlign:"center", width:"90px"}}>{mes[active]?.mesReferente}</div>
+          <IconButton sx={{color:corDosItens}} onClick={proximo} disabled={active === (mes.length - 1) ? true : false}>
+            <ArrowForwardIosIcon/>
+          </IconButton>
+        </div>
+        <div style={{textAlign:"center",marginTop:"20px"}}>Sobra {formatoMonetario(getSobra(mes[active]?.ganhos, mes[active]?.contas_A_Pagar))}</div>
+        <div className={`slideContainer`} style={sliderStyle}>
            { mes.length === 0 ? <div style={{display:"flex", justifyContent:"center", marginTop:"30px"}}>Não há dados</div>:
              mes.map((e,key)=>{
                return <div key={key} className='slide' style={{color:"black"}}>
