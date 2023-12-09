@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import { adicionarMesApi } from '../Api/mesApi';
+import { adicionarMesApi, listarMesApi } from '../Api/mesApi';
 import { corLaranja } from '../Cores';
 
 export default function ModalAdicionarMes({id}:{id:string}) {
@@ -30,15 +30,19 @@ export default function ModalAdicionarMes({id}:{id:string}) {
   };
 
   const adicionarMes = async()=>{
-     const r = await adicionarMesApi(id, Mes);
-     alert(JSON.stringify(r)+ r.length)
-     localStorage.setItem("step",JSON.stringify(r.length-1))
-      window.location.reload()
-     handleClose()
+    if (Mes === "") {
+      alert("adicione um mes!")
+      return null
+    }
+    const r = await adicionarMesApi(id, Mes); 
+    const m = await listarMesApi()
+    localStorage.setItem("step",JSON.stringify(m.length-1))
+    window.location.reload()
+    handleClose()
   }
   
 
-  const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto"]
+  const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
   return (
     <div>
       <React.Fragment>
@@ -48,11 +52,11 @@ export default function ModalAdicionarMes({id}:{id:string}) {
               </Fab>
           </Box>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Subscribe</DialogTitle>
+          <DialogTitle>Adicione um mês</DialogTitle>
           <DialogContent>
               <DialogContentText>
-                  To subscribe to this website, please enter your email address here. We
-                  will send updates occasionally.
+                  Adicione o mês das suas contas e depois adicione as entradas e as saidas financeiras, ou seja:
+                  quanto entrou e quanto saiu no mês!
               </DialogContentText>
               <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label"></InputLabel>
@@ -73,8 +77,8 @@ export default function ModalAdicionarMes({id}:{id:string}) {
         
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={adicionarMes}>Adicionar</Button>
+            <Button onClick={adicionarMes} variant='contained' color={"success"}>Adicionar</Button>
+            <Button onClick={handleClose} variant='contained' color='error'>Cancelar</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

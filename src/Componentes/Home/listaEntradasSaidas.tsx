@@ -50,7 +50,6 @@ export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:e
                         </div>
                         <FadeMenu id={e.id} tipo={tipo} handleAtualiza={handleAtualiza}/>
                     </ListItem>
-                    
                     <Divider sx={{bgcolor:corDosItens, height:"1px", margin:"0px 5px",}}/>
                 </div>
                 )

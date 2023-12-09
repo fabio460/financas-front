@@ -33,7 +33,6 @@ export default function ModalAdicionarConta({mes, handleAtualiza}:{mes:mesType, 
 
   const handleAdicionar = async()=>{
     const res = await adicionarContas_a_PagarApi(nome, valor, mes.id);
-    alert(JSON.stringify(res))
     handleAtualiza()
     handleClose()
   }

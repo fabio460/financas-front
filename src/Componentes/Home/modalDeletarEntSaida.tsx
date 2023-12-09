@@ -28,7 +28,7 @@ export default function ModalDeletarEntradaSaida({id, tipo, handleAtualiza}:{id:
       handleClose()
     }else{
       const res = await deletarGanhos(id)
-      alert(JSON.stringify(res))
+      //alert(JSON.stringify(res))
       handleAtualiza()
       handleClose()
     }

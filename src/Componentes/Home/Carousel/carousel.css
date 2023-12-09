@@ -30,6 +30,10 @@
     justify-content: space-between;
     margin-top: 20px;
 }
+.carouselNaoHaDados{
+    text-align: center;
+    margin-top: 70px;
+}
 @media (max-width:500px) {
     .slidesButtom{
         display: flex;
@@ -38,7 +42,6 @@
     .sliderList{
         height: 380px;
         overflow-y: scroll;
-        background-color: aqua;
     }
     .slide{
         width: 95vw;

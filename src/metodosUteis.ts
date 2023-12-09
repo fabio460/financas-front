@@ -1,4 +1,4 @@
-import { entradasSaidasType } from "./types";
+import { entradasSaidasType, mesType } from "./types";
 import ImageIcon from '@mui/icons-material/Image';
 
 export const emailValido = (email:string)=>{
@@ -34,4 +34,44 @@ export function getSobra(entradas:entradasSaidasType, saidas:entradasSaidasType)
 
 export const ignoreMaiusMinusAcent = (nome:string)=>{
    return nome.toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
+export const ordenaLista = (mes:mesType[])=>{
+   const mesAdd = mes.map(e=>{
+    switch (e.mesReferente) {
+        case "Janeiro":
+            return {num:1,e} 
+            break;
+        case "Fevereiro":
+            return {num:2,e}
+            break;    
+        case "Março":
+            return {num:3,e}     
+        case "Abril":
+            return {num:4,e} 
+        case "Maio":
+            return {num:5,e} 
+        case "Junho":
+            return {num:6,e} 
+        case "Julho":
+            return {num:7,e} 
+        case "Agosto":
+            return {num:8,e}   
+        case "Setembro":
+            return {num:9,e}     
+        case "Outubro":
+            return {num:10,e} 
+        case "Novembro":
+            return {num:11,e} 
+        case "Dezembro":
+            return {num:12,e}  
+        default:
+            break;
+    }
+   }) 
+   const ordenado = mesAdd.sort((a,b)=>{
+    return (a?.num as number) < (b?.num as number) ? -1 : (a?.num as number) > (b?.num as number) ? 1 : 0
+   })
+   return ordenado.map(e=>{
+    return e?.e
+   })
 }

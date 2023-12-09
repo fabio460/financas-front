@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
-import { deletarMesApi } from '../Api/mesApi';
+import { deletarMesApi, listarMesApi } from '../Api/mesApi';
 
 export default function ModalDeletarMes({idMes}:{idMes:string}) {
   const [open, setOpen] = React.useState(false);
@@ -21,8 +21,9 @@ export default function ModalDeletarMes({idMes}:{idMes:string}) {
   };
   const deletarMes = async()=>{
     const res = await deletarMesApi(idMes)
-    localStorage.setItem("step",JSON.stringify(0))
-    alert(res)
+    //alert(res)
+    const list = await listarMesApi()
+    localStorage.setItem("step",JSON.stringify(list.length-1))
     window.location.reload()
     handleClose()
   }
