@@ -45,6 +45,7 @@ export default function ModalAdicionarEntradas({mes, handleAtualiza}:{mes:mesTyp
         entradas
       </Button>
       <Dialog
+        component={"div"}
         open={open}
         TransitionComponent={Transition}
         keepMounted

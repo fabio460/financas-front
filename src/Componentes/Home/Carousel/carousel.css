@@ -1,11 +1,11 @@
 .slides{
-    max-width: 400px;
+    max-width: 370px;
     overflow-x: scroll;
     overflow: hidden;
     margin: auto;
 }
 .slide{
-    width: 400px;
+    width: 470px;
     min-height: 100px;
     transition: 0.5s;
 }
@@ -14,21 +14,14 @@
     transition: 0.5s;
     width: 100000px;
 }
-@media (max-width:400px) {
-    .slides{
-        width: 300px;
-        
-    }
-    .slide{
-        width: 300px;
-    }
-}
 
-@media (max-width:500) {
+
+@media (max-width:500px) {
     .slide{
-        width: 98vw;
+        width: 95vw;
     }
     .slides{
-        width: 95%;
+        width: 95vw;
+        margin: 0px;
     }
 }
