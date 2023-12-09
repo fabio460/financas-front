@@ -54,7 +54,7 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
             <ArrowForwardIosIcon/>
           </IconButton>
         </div>
-        <div style={{textAlign:"center",marginTop:"20px"}}>Sobra {formatoMonetario(getSobra(mes[active]?.ganhos, mes[active]?.contas_A_Pagar))}</div>
+        <div style={{textAlign:"center", marginTop:"10px"}}>Sobra {formatoMonetario(getSobra(mes[active]?.ganhos, mes[active]?.contas_A_Pagar))}</div>
         <div  className={`slideContainer`} style={sliderStyle}>
            { mes.length === 0 ? <div style={{display:"flex", justifyContent:"center", marginTop:"30px"}}>Não há dados</div>:
              mes.map((e,key)=>{
@@ -63,11 +63,11 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
                   <div style={{display:"flex", justifyContent:"flex-end", margin:"3px"}}>
                     <ModalDeletarMes idMes={e.id} />
                   </div>
-                  <div>
+                  <div className='sliderList'>
                     <ListaEntradasSaidas list={e.ganhos} tipo={"entrada"} handleAtualiza={handleAtualiza}/>
                     <ListaEntradasSaidas list={e.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
                   </div>
-                  <div>
+                  <div className='slidesButtom'>
                     <ModalAdicionarEntradas mes={e} handleAtualiza={handleAtualiza}/>
                     <ModalAdicionarConta mes={e}  handleAtualiza={handleAtualiza}/>
                   </div>

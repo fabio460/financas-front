@@ -24,35 +24,38 @@ import { corDosItens } from '../Cores';
 export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:entradasSaidasType, tipo:string, handleAtualiza:any}) {
  
     return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: '' }}>
+    <List sx={{ width: '100%'}}>
       {
         list.map((e, key)=>{
             return(
-                <ListItem sx={{p:0, display:""}} key={key}>
-                    <div style={{color:tipo==="entrada"? "green" : "red" ,display:"flex", justifyContent:"space-between", width:"100%", alignItems:"center"}}>
-                        <ListItemAvatar>
-                            <Avatar sx={{bgcolor:corDosItens}}>
-                                {
-                                   ignoreMaiusMinusAcent(e.nome).includes(("cartao")) || ignoreMaiusMinusAcent(e.nome).includes(("fatura")) ? <CreditCardIcon  />:
-                                   ignoreMaiusMinusAcent(e.nome).includes("aluguel") ? <MapsHomeWorkIcon />:
-                                   ignoreMaiusMinusAcent(e.nome).includes("internet") ? <WifiIcon />:
-                                   ignoreMaiusMinusAcent(e.nome).includes("salario") ? <CurrencyExchangeIcon/> :
-                                   ignoreMaiusMinusAcent(e.nome).includes("gas") ? <PropaneTankIcon />:
-                                   ignoreMaiusMinusAcent(e.nome).includes("luz") ? <EmojiObjectsIcon />:
-                                   ignoreMaiusMinusAcent(e.nome).includes("tv") || ignoreMaiusMinusAcent(e.nome).includes("genesio")?<LiveTvIcon />:
-                                   ignoreMaiusMinusAcent(e.nome).includes("dizimo") ? <RequestQuoteIcon />:
-                                   <WorkIcon/>
-                                }
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={e.nome} secondary={formatoMonetario(e.valor)} />
-                    </div>
-                    <FadeMenu id={e.id} tipo={tipo} handleAtualiza={handleAtualiza}/>
-                </ListItem>
-            )
+                <div>
+                    <ListItem sx={{p:0, display:""}} key={key}>
+                        <div style={{color:tipo==="entrada"? "green" : "red" ,display:"flex", justifyContent:"space-between", width:"100%", alignItems:"center"}}>
+                            <ListItemAvatar>
+                                <Avatar sx={{bgcolor:corDosItens}}>
+                                    {
+                                       ignoreMaiusMinusAcent(e.nome).includes(("cartao")) || ignoreMaiusMinusAcent(e.nome).includes(("fatura")) ? <CreditCardIcon  />:
+                                       ignoreMaiusMinusAcent(e.nome).includes("aluguel") ? <MapsHomeWorkIcon />:
+                                       ignoreMaiusMinusAcent(e.nome).includes("internet") ? <WifiIcon />:
+                                       ignoreMaiusMinusAcent(e.nome).includes("salario") ? <CurrencyExchangeIcon/> :
+                                       ignoreMaiusMinusAcent(e.nome).includes("gas") ? <PropaneTankIcon />:
+                                       ignoreMaiusMinusAcent(e.nome).includes("luz") ? <EmojiObjectsIcon />:
+                                       ignoreMaiusMinusAcent(e.nome).includes("tv") || ignoreMaiusMinusAcent(e.nome).includes("genesio")?<LiveTvIcon />:
+                                       ignoreMaiusMinusAcent(e.nome).includes("dizimo") ? <RequestQuoteIcon />:
+                                       <WorkIcon/>
+                                    }
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={e.nome} secondary={formatoMonetario(e.valor)} />
+                        </div>
+                        <FadeMenu id={e.id} tipo={tipo} handleAtualiza={handleAtualiza}/>
+                    </ListItem>
+                    
+                    <Divider sx={{bgcolor:"#03b8f4", height:"1px", margin:"0px 5px",}}/>
+                </div>
+                )
         })
     }  
-    <Divider sx={{bgcolor:'ButtonHighlight'}}/>
       
     </List>
   );
