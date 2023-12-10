@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RotaPrivada from './Componentes/rotaPrivada';
 import Login from './Componentes/Login/login';
 import Cadastro from './Componentes/Cadastro/cadastro';
-import Home from './Componentes/Home/home';
+import Home from './Componentes/Home';
 
 function App() {
   return (
