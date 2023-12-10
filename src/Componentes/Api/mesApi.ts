@@ -1,8 +1,8 @@
 import { link } from "./link";
 
-export const listarMesApi = async()=>{
+export const listarMesApi = async(id:string)=>{
     let response = "" 
-    await fetch(link+"mes/listarMes",{
+    await fetch(link+"mes/listarMes/"+id,{
      headers:{
          "Content-Type":"application/json"
      },

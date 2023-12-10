@@ -35,7 +35,7 @@ export default function ModalAdicionarMes({id}:{id:string}) {
       return null
     }
     const r = await adicionarMesApi(id, Mes); 
-    const m = await listarMesApi()
+    const m = await listarMesApi(id)
     localStorage.setItem("step",JSON.stringify(m.length-1))
     window.location.reload()
     handleClose()

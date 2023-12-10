@@ -12,6 +12,7 @@ export default function Home() {
   const n = useNavigate() 
   const logouf = ()=>{
     localStorage.removeItem("token")
+    localStorage.setItem("step",JSON.stringify(0))
     n("/login")
   }
   async function deletarUsuario(){
@@ -33,7 +34,7 @@ export default function Home() {
       <div>
           <h2>Bem vindo {usuarioLogado.nome}</h2>
           <button onClick={logouf}>sair</button>
-          <Contas />
+          <Contas id={usuarioLogado.id} />
           <ModalAdicionarMes id={usuarioLogado.id}/>
           {/* <button onClick={()=> deletarUsuario()}>deletar conta</button> */}
       </div>

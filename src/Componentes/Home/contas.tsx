@@ -5,14 +5,14 @@ import "./home.css"
 import Carousel from './Carousel';
 import { ordenaLista } from '../../metodosUteis';
 
-function Contas() {
+function Contas({id}:{id:string}) {
   const [mes, setMes] = useState<mesType[]>([])
   const [atualiza, setatualiza] = useState(false)
   const [loading, setloading] = useState(false)
   useEffect(()=>{
     async function getMes() {
       setloading(true)
-      const res:any = await listarMesApi()
+      const res:any = await listarMesApi(id)
       setMes(res)
       setloading(false)
     }

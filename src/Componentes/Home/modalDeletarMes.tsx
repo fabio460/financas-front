@@ -8,8 +8,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { deletarMesApi, listarMesApi } from '../Api/mesApi';
+import { corVermelho } from '../Cores';
 
-export default function ModalDeletarMes({idMes}:{idMes:string}) {
+export default function ModalDeletarMes({idMes, id}:{idMes:string, id:string}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -22,14 +23,14 @@ export default function ModalDeletarMes({idMes}:{idMes:string}) {
   const deletarMes = async()=>{
     const res = await deletarMesApi(idMes)
     //alert(res)
-    const list = await listarMesApi()
+    const list = await listarMesApi(id)
     localStorage.setItem("step",JSON.stringify(list.length-1))
     window.location.reload()
     handleClose()
   }
   return (
     <React.Fragment>
-      <IconButton onClick={handleClickOpen}><DeleteIcon/></IconButton>
+      <IconButton onClick={handleClickOpen}><DeleteIcon sx={{color:corVermelho}}/></IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -47,7 +48,7 @@ export default function ModalDeletarMes({idMes}:{idMes:string}) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={deletarMes} variant='contained' color='error'>Confirmar</Button>
+          <Button onClick={deletarMes} variant='contained' color='success'>Confirmar</Button>
           <Button onClick={handleClose} autoFocus color='error' variant='contained'>
             Cancelar
           </Button>
