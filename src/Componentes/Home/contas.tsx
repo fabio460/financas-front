@@ -23,9 +23,9 @@ function Contas() {
   }
   let mesOrdenado = ordenaLista(mes) as mesType[]
   return (
-    <div>
+    <div> 
       {
-        loading ? <div>carregando...</div>:
+        // loading ? <div>carregando tela...</div>:
        <Carousel mes={mesOrdenado} handleAtualiza={handleAtualiza}/>
       }
     </div>

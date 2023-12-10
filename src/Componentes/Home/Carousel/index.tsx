@@ -14,6 +14,7 @@ import { Typography } from '@mui/material';
 
 export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtualiza:any}) {
   const [active, setActive] = useState(localStorage.getItem("step") ? parseInt(localStorage.getItem("step") as string):0)
+  const [loading, setloading] = useState(false)
   const proximo = ()=>{
     if (active < ( mes.length - 1)) {      
       localStorage.setItem("step",JSON.stringify(active + 1))
@@ -27,68 +28,69 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
     }
   }
   
-  const [sizeSlide, setsizeSlide] = useState()
+  const [sizeSlide, setsizeSlide] = useState(-1)
   const minhaDivRef = useRef<any>(null);
-    setTimeout(() => {
-      if (minhaDivRef) {
-        const larguraDaDiv = minhaDivRef.current?.offsetWidth;
-        setsizeSlide(larguraDaDiv)
-      }
-    }, 500);
-  
-    const sliderStyle = {
-      "marginLeft":`${sizeSlide && -active*sizeSlide}px`,
-      margin:"auto",
+    
+  setTimeout(() => {
+    const larguraDaDiv = minhaDivRef.current?.offsetWidth;
+    if (minhaDivRef) {
+      setsizeSlide(larguraDaDiv)
     }
+  }, 500);
 
-   
+  const sliderStyle = {
+    "marginLeft":`${sizeSlide && -active*sizeSlide}px`,
+    margin:"auto",
+  }
     
   return (
     <div >
-      <div className='slides' ref={minhaDivRef}>
-        {
-          mes.length !== 0 && 
-          <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-            <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={active === 0 ? true : false}>
-              <ArrowBackIosNewIcon />
-            </IconButton>
-            <div style={{textAlign:"center", width:"90px"}}> --- </div>
-            <IconButton sx={{color:corDosItens}} onClick={proximo} disabled={active === (mes.length - 1) ? true : false}>
-              <ArrowForwardIosIcon/>
-            </IconButton>
-          </div>
-        }
-        {
-          mes.length !== 0 && <div style={{textAlign:"center", marginTop:"10px"}}>Sobra {formatoMonetario(getSobra(mes[active]?.ganhos, mes[active]?.contas_A_Pagar))}</div>
-
-        }
-        {
-          mes.length === 0 ? <div className='carouselNaoHaDados'>Não há dados, adicione o mês no botão laranja abaixo!</div>:
-          <div  className={`slideContainer`} style={sliderStyle}>
-            { 
-              mes.map((e,key)=>{
-                return <div key={key} className='slide' style={{color:"black"}}>
-                  <div >
-                    <div style={{display:"flex", justifyContent:"flex-end", margin:"3px"}}>
-                      <ModalDeletarMes idMes={e.id} />
-                    </div>
-                    <div className='sliderList'>
-                      <h3 style={{color:"white", textAlign:"center"}}>{e.mesReferente}</h3>
-                      <h1>{active}--{localStorage.getItem("step")}</h1>
-                      <ListaEntradasSaidas list={e.ganhos} tipo={"entrada"} handleAtualiza={handleAtualiza}/>
-                      <ListaEntradasSaidas list={e.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
-                    </div>                    
-                    <div className='slidesButtom'>
-                      <ModalAdicionarEntradas mes={e} handleAtualiza={handleAtualiza}/>
-                      <ModalAdicionarConta mes={e}  handleAtualiza={handleAtualiza}/>
+      {
+        (sizeSlide === -1) ? <div>carregando</div>:
+        <div className='slides' ref={minhaDivRef}>
+          {
+            mes.length !== 0 && 
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+              <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={active === 0 ? true : false}>
+                <ArrowBackIosNewIcon />
+              </IconButton>
+              <div style={{textAlign:"center", width:"90px"}}> --- </div>
+              <IconButton sx={{color:corDosItens}} onClick={proximo} disabled={active === (mes.length - 1) ? true : false}>
+                <ArrowForwardIosIcon/>
+              </IconButton>
+            </div>
+          }
+          {
+            mes.length !== 0 && <div style={{textAlign:"center", marginTop:"10px"}}>Sobra {formatoMonetario(getSobra(mes[active]?.ganhos, mes[active]?.contas_A_Pagar))}</div>
+          }
+          {
+            mes.length === 0 ? <div className='carouselNaoHaDados'>Não há dados, adicione o mês no botão laranja abaixo!</div>:
+            <div  className={`slideContainer`} style={sliderStyle}>
+              { 
+                mes.map((e,key)=>{
+                  return <div key={key} className='slide' style={{color:"black"}}>
+                    <div >
+                      <div style={{display:"flex", justifyContent:"flex-end", margin:"3px"}}>
+                        <ModalDeletarMes idMes={e.id} />
+                      </div>
+                      <div className='sliderList'>
+                        <h3 style={{color:"", textAlign:"center"}}>{e.mesReferente}</h3>
+                        <h1>{active}--{localStorage.getItem("step")}</h1>
+                        <ListaEntradasSaidas list={e.ganhos} tipo={"entrada"} handleAtualiza={handleAtualiza}/>
+                        <ListaEntradasSaidas list={e.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
+                      </div>                    
+                      <div className='slidesButtom'>
+                        <ModalAdicionarEntradas mes={e} handleAtualiza={handleAtualiza}/>
+                        <ModalAdicionarConta mes={e}  handleAtualiza={handleAtualiza}/>
+                      </div>
                     </div>
                   </div>
-                </div>
-              })
-            }
-          </div>
-        }
-      </div>
+                })
+              }
+            </div>
+          }
+        </div>
+      }
     </div>
   )
 }

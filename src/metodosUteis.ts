@@ -22,7 +22,7 @@ export function formatoMonetario(valor:any){
     return valor?.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
 }
 
-export function getSobra(entradas:entradasSaidasType, saidas:entradasSaidasType) {
+export function getSobra(entradas:entradasSaidasType[], saidas:entradasSaidasType[]) {
     let entrada = entradas?.reduce((acc, item)=>{
         return acc+= item.valor;
     },0)

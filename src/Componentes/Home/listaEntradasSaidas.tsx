@@ -21,7 +21,7 @@ import FadeMenu from './menu';
 import { ignoreMaiusMinusAcent } from "../../metodosUteis";
 import { corDosItens } from '../Cores';
 
-export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:entradasSaidasType, tipo:string, handleAtualiza:any}) {
+export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:entradasSaidasType[], tipo:string, handleAtualiza:any}) {
  
     return (
     <List sx={{ width: '100%'}}>
@@ -48,7 +48,7 @@ export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:e
                             </ListItemAvatar>
                             <ListItemText primary={e.nome} secondary={formatoMonetario(e.valor)} />
                         </div>
-                        <FadeMenu id={e.id} tipo={tipo} handleAtualiza={handleAtualiza}/>
+                        <FadeMenu id={e.id} tipo={tipo} handleAtualiza={handleAtualiza} elem={e}/>
                     </ListItem>
                     <Divider sx={{bgcolor:corDosItens, height:"1px", margin:"0px 5px",}}/>
                 </div>

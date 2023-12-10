@@ -7,9 +7,11 @@ import Fade from '@mui/material/Fade';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ModalDeletarEntradaSaida from './modalDeletarEntSaida';
 import { corDosItens } from '../Cores';
+import ModalAtualizarEntSaida from './modalAtualizarEntSaida';
+import { entradasSaidasType } from '../../types';
 
 
-export default function FadeMenu({id, tipo, handleAtualiza}:{id:string, tipo:string, handleAtualiza:any}) {
+export default function FadeMenu({id, tipo, handleAtualiza, elem}:{id:string, tipo:string, handleAtualiza:any, elem:entradasSaidasType}) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -42,7 +44,7 @@ export default function FadeMenu({id, tipo, handleAtualiza}:{id:string, tipo:str
         TransitionComponent={Fade}
       >
         <ModalDeletarEntradaSaida id={id} tipo={tipo} handleAtualiza={handleAtualiza}/>
-        <MenuItem onClick={handleClose}>Atualizar</MenuItem>
+        <ModalAtualizarEntSaida id={id} tipo={tipo} handleAtualiza={handleAtualiza} elem={elem} close={handleClose}/>
       </Menu>
     </div>
   );

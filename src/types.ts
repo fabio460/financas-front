@@ -27,4 +27,4 @@ export type entradasSaidasType={
     nome:string
     valor:number
     idMes:string
-}[]
+}

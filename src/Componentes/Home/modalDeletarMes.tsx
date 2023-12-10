@@ -47,8 +47,8 @@ export default function ModalDeletarMes({idMes}:{idMes:string}) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={deletarMes} variant='outlined' color='error'>Confirmar</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={deletarMes} variant='contained' color='error'>Confirmar</Button>
+          <Button onClick={handleClose} autoFocus color='error' variant='contained'>
             Cancelar
           </Button>
         </DialogActions>

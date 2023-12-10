@@ -65,8 +65,8 @@ export default function ModalAdicionarEntradas({mes, handleAtualiza}:{mes:mesTyp
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAdicionar}>Confirmar</Button>
-          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleAdicionar} color='success' variant='contained'>Confirmar</Button>
+          <Button onClick={handleClose} color='error' variant='contained'>Cancelar</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
