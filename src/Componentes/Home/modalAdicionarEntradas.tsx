@@ -41,7 +41,7 @@ export default function ModalAdicionarEntradas({mes, handleAtualiza}:{mes:mesTyp
   }
   return (
     <React.Fragment>
-      <Button fullWidth variant="outlined" onClick={handleClickOpen}>
+      <Button fullWidth variant="outlined" onClick={handleClickOpen} className='buttons'>
         entradas
       </Button>
       <Dialog
