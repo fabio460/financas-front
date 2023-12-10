@@ -54,7 +54,7 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
               <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={active === 0 ? true : false}>
                 <ArrowBackIosNewIcon />
               </IconButton>
-              <div style={{textAlign:"center", width:"90px"}}> --- </div>
+              <div style={{textAlign:"center", width:"90px"}}>  </div>
               <IconButton sx={{color:corDosItens}} onClick={proximo} disabled={active === (mes.length - 1) ? true : false}>
                 <ArrowForwardIosIcon/>
               </IconButton>
@@ -69,13 +69,12 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
               { 
                 mes.map((e,key)=>{
                   return <div key={key} className='slide' style={{color:"black"}}>
-                    <div >
+                    <div>
                       <div style={{display:"flex", justifyContent:"flex-end", margin:"3px"}}>
                         <ModalDeletarMes idMes={e.id} />
                       </div>
                       <div className='sliderList'>
                         <h3 style={{color:"", textAlign:"center"}}>{e.mesReferente}</h3>
-                        <h1>{active}--{localStorage.getItem("step")}</h1>
                         <ListaEntradasSaidas list={e.ganhos} tipo={"entrada"} handleAtualiza={handleAtualiza}/>
                         <ListaEntradasSaidas list={e.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
                       </div>                    
