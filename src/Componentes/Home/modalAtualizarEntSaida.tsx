@@ -24,14 +24,14 @@ const Transition = React.forwardRef(function Transition(
 export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, elem, close}:{id:string, tipo:string, handleAtualiza:any, close:any,elem:entradasSaidasType}) {
   const [open, setOpen] = React.useState(false);
   const [nome, setNome] = useState("")
-  const [valor, setValor] = useState(0)
+  const [valor, setValor] = useState(elem.valor)
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   useEffect(()=>{
     setNome(elem.nome)
-    setValor(300)
+    setValor(elem.valor)
   },[])
   const handleClose = () => {
     setOpen(false);
