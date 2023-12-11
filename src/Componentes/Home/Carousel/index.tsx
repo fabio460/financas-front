@@ -80,7 +80,7 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
                         <ListaEntradasSaidas list={e.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
                       </div>                    
                       <AppBar position="relative" color="default" 
-                         sx={{ top: 'auto', bottom: 0, display:"" }}>
+                         sx={{ top: 'auto', bottom: 10, display:"" }}>
                           <Toolbar>
                             <ModalAdicionarEntradas mes={e} handleAtualiza={handleAtualiza}/>
                             <ModalAdicionarConta mes={e}  handleAtualiza={handleAtualiza}/>
