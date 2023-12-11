@@ -54,7 +54,7 @@ export default function ModalDeletarEntradaSaida({id, tipo, handleAtualiza}:{id:
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={deletar} color='success' variant='contained'>confirmar Deleção</Button>
+          <Button onClick={deletar} color='success' variant='contained'>confirmar</Button>
           <Button onClick={handleClose} autoFocus color='error' variant='contained'>
             cancelar
           </Button>

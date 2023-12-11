@@ -9,7 +9,9 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { mesType } from '../../types';
 import { adicionarContas_a_PagarApi } from '../Api/contas_a_pagarApi';
-
+import { IconButton, TextField } from '@mui/material';
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
+import { corVermelho } from '../Cores';
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
@@ -38,9 +40,12 @@ export default function ModalAdicionarConta({mes, handleAtualiza}:{mes:mesType, 
   }
   return (
     <React.Fragment>
-      <Button color='error' fullWidth variant="outlined" onClick={handleClickOpen}>
+      {/* <Button color='error' variant="outlined" onClick={handleClickOpen}>
         saidas
-      </Button>
+      </Button> */}
+      <IconButton onClick={handleClickOpen}>
+        <ArrowCircleDownIcon sx={{width:"35px", height:"35px", color:corVermelho}}/>
+      </IconButton>
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -48,16 +53,18 @@ export default function ModalAdicionarConta({mes, handleAtualiza}:{mes:mesType, 
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Adicione as suas contas do mês de "+mes.mesReferente}</DialogTitle>
+        <DialogTitle sx={{color:corVermelho}}>Saidas mês de {mes.mesReferente}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            <div className='inputGlobalContainer'>
+            {/* <div className='inputGlobalContainer'>
               <input onChange={e=>setNome(e.target.value)} className='inputGlobal' placeholder='Nome'/>
             </div>
             <div className='inputGlobalContainer'>
               <input onChange={e=>setValor(parseFloat(e.target.value))} className='inputGlobal' placeholder='Valor'/>
-            </div>
-            
+            </div> */}
+            <TextField type='text' fullWidth placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
+            <TextField type='text' sx={{mt:3}} fullWidth placeholder='Valor' onChange={e=>setValor(parseFloat(e.target.value))}/>
+
           </DialogContentText>
         </DialogContent>
         <DialogActions>

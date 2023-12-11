@@ -1,3 +1,5 @@
 export const corDosItens = "#03a9f4"
 export const corLaranja = "#ed6c02"
 export const corVermelho = "#ef5350"
+export const corDark = "rgba(0, 0, 0, 0.12)"
+export const corVerde = "#4caf50"

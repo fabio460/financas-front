@@ -19,7 +19,7 @@ import { entradasSaidasType } from '../../types';
 import { formatoMonetario } from '../../metodosUteis';
 import FadeMenu from './menu';
 import { ignoreMaiusMinusAcent } from "../../metodosUteis";
-import { corDosItens } from '../Cores';
+import { corDosItens, corVerde, corVermelho } from '../Cores';
 
 export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:entradasSaidasType[], tipo:string, handleAtualiza:any}) {
     return (
@@ -29,7 +29,7 @@ export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:e
                     return(
                         <div>
                             <ListItem sx={{p:0, display:""}} key={key}>
-                                <div style={{color:tipo==="entrada"? "green" : "red" ,display:"flex", justifyContent:"space-between", width:"100%", alignItems:"center"}}>
+                                <div style={{color:tipo==="entrada"? corVerde : corVermelho ,display:"flex", justifyContent:"space-between", width:"100%", alignItems:"center"}}>
                                     <ListItemAvatar>
                                         <Avatar sx={{bgcolor:corDosItens}}>
                                             {

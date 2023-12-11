@@ -10,7 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import ModalDeletarMes from '../modalDeletarMes';
 import { formatoMonetario, getSobra, ordenaLista } from '../../../metodosUteis';
 import { corDosItens } from '../../Cores';
-import { Typography } from '@mui/material';
+import { AppBar, Toolbar, Typography } from '@mui/material';
+import FooterBar from '../footerBar';
 
 export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtualiza:any}) {
   const [active, setActive] = useState(localStorage.getItem("step") ? parseInt(localStorage.getItem("step") as string):0)
@@ -68,7 +69,7 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
             <div  className={`slideContainer`} style={sliderStyle}>
               { 
                 mes.map((e,key)=>{
-                  return <div key={key} className='slide' style={{color:"black"}}>
+                  return <div key={key} className='slide' style={{color:""}}>
                     <div>
                       <div style={{display:"flex", justifyContent:"flex-end", margin:"3px"}}>
                         <ModalDeletarMes idMes={e.id} id={e.id}/>
@@ -78,10 +79,14 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
                         <ListaEntradasSaidas list={e.ganhos} tipo={"entrada"} handleAtualiza={handleAtualiza}/>
                         <ListaEntradasSaidas list={e.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
                       </div>                    
-                      <div className='slidesButtom'>
-                        <ModalAdicionarEntradas mes={e} handleAtualiza={handleAtualiza}/>
-                        <ModalAdicionarConta mes={e}  handleAtualiza={handleAtualiza}/>
-                      </div>
+                      <AppBar position="relative" color="default" 
+                         sx={{ top: 'auto', bottom: 0, display:"" }}>
+                          <Toolbar>
+                            <ModalAdicionarEntradas mes={e} handleAtualiza={handleAtualiza}/>
+                            <ModalAdicionarConta mes={e}  handleAtualiza={handleAtualiza}/>
+                          </Toolbar>
+                      </AppBar>
+                      
                     </div>
                   </div>
                 })

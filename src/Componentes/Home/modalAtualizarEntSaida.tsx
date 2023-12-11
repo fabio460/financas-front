@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { MenuItem } from '@mui/material';
+import { MenuItem, TextField } from '@mui/material';
 import { entradasSaidasType } from '../../types';
 import { atualizarContas_a_PagarApi } from '../Api/contas_a_pagarApi';
 import { atualizarGanhos } from '../Api/ganhosApi';
@@ -62,12 +62,15 @@ export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, elem, 
         <DialogTitle>{"Area de atualização de dados"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            <div className='inputGlobalContainer'>
+            {/* <div className='inputGlobalContainer'>
                 <input onChange={e=>setNome(e.target.value)} defaultValue={nome} className='inputGlobal' placeholder='Nome'/>
             </div>
             <div className='inputGlobalContainer'>
                 <input onChange={e=>setValor(parseFloat(e.target.value))} defaultValue={valor.toString()} className='inputGlobal' placeholder='Valor'/>
-            </div>
+            </div> */}
+            <TextField type='text' fullWidth placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
+            <TextField type='text' sx={{mt:3}} fullWidth placeholder='Valor' onChange={e=>setValor(parseFloat(e.target.value))}/>
+
           </DialogContentText>
         </DialogContent>
         <DialogActions>
