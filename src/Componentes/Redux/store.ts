@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import usuarioRedux from './Reducers/usuarioRedux'
+import searchReducer from './Reducers/searchReducer'
 export const store = configureStore({
   reducer: {
+    searchReducer,
     usuarioRedux,
   },
 })

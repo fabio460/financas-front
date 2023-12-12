@@ -23,7 +23,7 @@ const Transition = React.forwardRef(function Transition(
 
 export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, elem, close}:{id:string, tipo:string, handleAtualiza:any, close:any,elem:entradasSaidasType}) {
   const [open, setOpen] = React.useState(false);
-  const [nome, setNome] = useState("")
+  const [nome, setNome] = useState(elem.nome)
   const [valor, setValor] = useState(elem.valor)
   const handleClickOpen = () => {
     setOpen(true);
@@ -68,8 +68,8 @@ export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, elem, 
             <div className='inputGlobalContainer'>
                 <input onChange={e=>setValor(parseFloat(e.target.value))} defaultValue={valor.toString()} className='inputGlobal' placeholder='Valor'/>
             </div> */}
-            <TextField type='text' fullWidth placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
-            <TextField type='text' sx={{mt:3}} fullWidth placeholder='Valor' onChange={e=>setValor(parseFloat(e.target.value))}/>
+            <TextField defaultValue={nome.toString()} type='text' fullWidth placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
+            <TextField defaultValue={valor.toString()} type='text' sx={{mt:3}} fullWidth placeholder='Valor' onChange={e=>setValor(parseFloat(e.target.value))}/>
 
           </DialogContentText>
         </DialogContent>

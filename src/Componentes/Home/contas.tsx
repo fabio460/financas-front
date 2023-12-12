@@ -3,7 +3,8 @@ import { mesType } from '../../types';
 import { listarMesApi } from '../Api/mesApi';
 import "./home.css"
 import Carousel from './Carousel';
-import { ordenaLista } from '../../metodosUteis';
+import { ignoreMaiusMinusAcent, ordenaLista } from '../../metodosUteis';
+import { useAppSelector } from '../Redux/hooks';
 
 function Contas({id}:{id:string}) {
   const [mes, setMes] = useState<mesType[]>([])
@@ -21,12 +22,33 @@ function Contas({id}:{id:string}) {
   const handleAtualiza = ()=>{
     setatualiza(!atualiza)
   }
+  const search = useAppSelector(state=>state.searchReducer.search)
   let mesOrdenado = ordenaLista(mes) as mesType[]
+  let listaFiltrada = mesOrdenado.map(((e, key)=>{
+    let contas_A_Pagar = e.contas_A_Pagar.filter(c=>{
+      if (ignoreMaiusMinusAcent(c.nome).includes(ignoreMaiusMinusAcent(search))) {
+        return c
+      }
+    })
+    let ganhos = e.ganhos.filter(c=>{
+      if (ignoreMaiusMinusAcent(c.nome).includes(ignoreMaiusMinusAcent(search))) {
+        return c
+      }
+    })
+    return {
+      id:e.id,
+      contas_A_Pagar,
+      ganhos,
+      idDoUsuario:e.idDoUsuario,
+      mesReferente:e.mesReferente
+    }
+  }))
+
   return (
     <div> 
       {
         // loading ? <div>carregando tela...</div>:
-       <Carousel mes={mesOrdenado} handleAtualiza={handleAtualiza}/>
+       <Carousel mes={listaFiltrada} handleAtualiza={handleAtualiza}/>
       }
     </div>
   );

@@ -28,3 +28,8 @@ export type entradasSaidasType={
     valor:number
     idMes:string
 }
+
+export type checkedListType={
+    checked:boolean,
+    elem:entradasSaidasType
+}

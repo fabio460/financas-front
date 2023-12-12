@@ -23,13 +23,34 @@ export function formatoMonetario(valor:any){
 }
 
 export function getSobra(entradas:entradasSaidasType[], saidas:entradasSaidasType[]) {
+
+
+    let array = ["teste 1","saida 2","65768f191ca757a05621ba76"]
+
+    let accEnt = 0
+    array.map(a=>{
+        return entradas.map((e)=>{
+            return e.nome === a ? accEnt-=e.valor : accEnt;
+        },0)
+    })
+    let difEnt = accEnt*(-1)
+
+    let accSai = 0
+    array.map(a=>{
+        return saidas.map((e)=>{
+            return e.nome === a ? accSai-=e.valor : accSai;
+        },0)
+    })
+    
+    let difSai = accSai*(-1)
+
     let entrada = entradas?.reduce((acc, item)=>{
-        return acc+= item.valor;
+       return acc+= item.valor;
     },0)
     let saida = saidas?.reduce((acc, item)=>{
         return acc+= item.valor;
     },0)
-    return entrada - saida;
+    return (entrada - difEnt) - (saida - difSai);
 }
 
 export const ignoreMaiusMinusAcent = (nome:string)=>{

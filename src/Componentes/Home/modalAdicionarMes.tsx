@@ -46,7 +46,7 @@ export default function ModalAdicionarMes({id}:{id:string}) {
   return (
     <div>
       <React.Fragment>
-          <Box sx={{ '& > :not(style)': { m: 0, position:"fixed", bottom:"15px", right:"15px" } }}>
+          <Box sx={{ '& > :not(style)': { m: 0, position:"absolute", bottom:"15px", right:"8px", zIndex:1 } }}>
               <Fab sx={{bgcolor:corLaranja}} color="primary" aria-label="add" onClick={handleClickOpen}>
                   <AddIcon />
               </Fab>

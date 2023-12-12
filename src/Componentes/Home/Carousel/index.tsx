@@ -1,6 +1,6 @@
 import React,{useEffect, useRef, useState} from 'react'
 import "./carousel.css"
-import { mesType } from '../../../types'
+import { checkedListType, mesType } from '../../../types'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ListaEntradasSaidas from '../listaEntradasSaidas';
@@ -10,8 +10,10 @@ import IconButton from '@mui/material/IconButton';
 import ModalDeletarMes from '../modalDeletarMes';
 import { formatoMonetario, getSobra, ordenaLista } from '../../../metodosUteis';
 import { corDosItens } from '../../Cores';
-import { AppBar, Toolbar, Typography } from '@mui/material';
+import { AppBar, Input, Toolbar, Typography } from '@mui/material';
 import FooterBar from '../footerBar';
+import { useAppDispatch } from '../../Redux/hooks';
+import { setSearch } from '../../Redux/Reducers/searchReducer';
 
 export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtualiza:any}) {
   const [active, setActive] = useState(localStorage.getItem("step") ? parseInt(localStorage.getItem("step") as string):0)
@@ -43,7 +45,10 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
     "marginLeft":`${sizeSlide && -active*sizeSlide}px`,
     margin:"auto",
   }
-    
+  const dispach = useAppDispatch()
+  const handleSearch = (e:any)=>{
+   dispach(setSearch(e.target.value))
+  }
   return (
     <div >
       {
@@ -55,7 +60,7 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
               <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={active === 0 ? true : false}>
                 <ArrowBackIosNewIcon />
               </IconButton>
-              <div style={{textAlign:"center", width:"90px"}}>  </div>
+              <div style={{textAlign:"center", width:"90px"}}> {mes[active].mesReferente} </div>
               <IconButton sx={{color:corDosItens}} onClick={proximo} disabled={active === (mes.length - 1) ? true : false}>
                 <ArrowForwardIosIcon/>
               </IconButton>
@@ -76,14 +81,15 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
                       </div>
                       <div className='sliderList'>
                         <h3 style={{color:"", textAlign:"center"}}>{e.mesReferente}</h3>
-                        <ListaEntradasSaidas list={e.ganhos} tipo={"entrada"} handleAtualiza={handleAtualiza}/>
-                        <ListaEntradasSaidas list={e.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
+                        <ListaEntradasSaidas  list={e.ganhos} tipo={"entrada"} handleAtualiza={handleAtualiza}/>
+                        <ListaEntradasSaidas  list={e.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
                       </div>                    
-                      <AppBar position="relative" color="default" 
-                         sx={{ top: 'auto', bottom: 10, display:"" }}>
+                      <AppBar position="absolute"  color="default" 
+                         sx={{ top: 'auto', bottom: 0, display:"", zIndex:1 }}>
                           <Toolbar>
                             <ModalAdicionarEntradas mes={e} handleAtualiza={handleAtualiza}/>
                             <ModalAdicionarConta mes={e}  handleAtualiza={handleAtualiza}/>
+                            <Input placeholder='busca' onChange={handleSearch}/>
                           </Toolbar>
                       </AppBar>
                       
