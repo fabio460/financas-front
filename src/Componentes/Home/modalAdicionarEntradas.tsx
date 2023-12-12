@@ -40,6 +40,7 @@ export default function ModalAdicionarEntradas({mes, handleAtualiza}:{mes:mesTyp
   const handleAdicionar = async()=>{
     setLoading(true)
     const res = await adicionarGanhos(nome, valor, mes.id);
+    console.log(res+mes.mesReferente)
     handleAtualiza()
     setLoading(false)
     handleClose()

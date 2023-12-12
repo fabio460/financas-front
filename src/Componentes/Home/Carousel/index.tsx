@@ -85,6 +85,7 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
                 mes?.map((e,key)=>{
                   return <div key={key} className='slide' style={{color:""}}>
                     <div>
+                      {e.mesReferente}
                       <div style={{display:"flex", justifyContent:"flex-end", margin:"3px"}}>
                         <ModalDeletarMes idMes={e.id} id={e.id}/>
                       </div>
@@ -93,15 +94,16 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
                         <ListaEntradasSaidas  list={e.ganhos} tipo={"entrada"} handleAtualiza={handleAtualiza}/>
                         <ListaEntradasSaidas  list={e.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
                       </div>                    
-                      <AppBar position="absolute"  color="default" 
+                      {/* <AppBar position="absolute"  color="default" 
                          sx={{ top: 'auto', bottom: 0, display:"", zIndex:1, paddingBottom:"10px" }}>
                           <Toolbar>
+                          </Toolbar>
+                      </AppBar> */}
+                      <div style={{position:"relative", background:"inherit",top: 'auto', bottom: 0, display:"flex", zIndex:1, paddingBottom:"10px"}}>
                             <ModalAdicionarEntradas mes={e} handleAtualiza={handleAtualiza}/>
                             <ModalAdicionarConta mes={e}  handleAtualiza={handleAtualiza}/>
                             <Input placeholder='busca' onChange={handleSearch}/>
-                          </Toolbar>
-                      </AppBar>
-                      
+                      </div>
                     </div>
                   </div>
                 })
