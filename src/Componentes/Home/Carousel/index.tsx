@@ -99,7 +99,7 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
                           <Toolbar>
                           </Toolbar>
                       </AppBar> */}
-                      <div style={{position:"relative", background:"inherit",top: 'auto', bottom: 0, display:"flex", zIndex:1, paddingBottom:"10px"}}>
+                      <div style={{position:"relative", background:"inherit",top: '10px', bottom: 0, display:"flex", zIndex:1, paddingBottom:"10px"}}>
                             <ModalAdicionarEntradas mes={e} handleAtualiza={handleAtualiza}/>
                             <ModalAdicionarConta mes={e}  handleAtualiza={handleAtualiza}/>
                             <Input placeholder='busca' onChange={handleSearch}/>
