@@ -24,7 +24,7 @@ export default function ModalDeletarMes({idMes, id}:{idMes:string, id:string}) {
     const res = await deletarMesApi(idMes)
     //alert(res)
     const list = await listarMesApi(id)
-    localStorage.setItem("step",JSON.stringify(list.length-1))
+    localStorage.setItem("step",JSON.stringify(0))
     window.location.reload()
     handleClose()
   }

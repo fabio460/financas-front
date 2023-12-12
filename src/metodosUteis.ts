@@ -29,7 +29,7 @@ export function getSobra(entradas:entradasSaidasType[], saidas:entradasSaidasTyp
 
     let accEnt = 0
     array.map(a=>{
-        return entradas.map((e)=>{
+        return entradas?.map((e)=>{
             return e.nome === a ? accEnt-=e.valor : accEnt;
         },0)
     })
@@ -37,7 +37,7 @@ export function getSobra(entradas:entradasSaidasType[], saidas:entradasSaidasTyp
 
     let accSai = 0
     array.map(a=>{
-        return saidas.map((e)=>{
+        return saidas?.map((e)=>{
             return e.nome === a ? accSai-=e.valor : accSai;
         },0)
     })

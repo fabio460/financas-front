@@ -60,7 +60,7 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
               <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={active === 0 ? true : false}>
                 <ArrowBackIosNewIcon />
               </IconButton>
-              <div style={{textAlign:"center", width:"90px"}}> {mes[active].mesReferente} </div>
+              <div style={{textAlign:"center", width:"90px"}}> {mes[active]?.mesReferente} </div>
               <IconButton sx={{color:corDosItens}} onClick={proximo} disabled={active === (mes.length - 1) ? true : false}>
                 <ArrowForwardIosIcon/>
               </IconButton>
@@ -73,14 +73,14 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
             mes.length === 0 ? <div className='carouselNaoHaDados'>Não há dados, adicione o mês no botão laranja abaixo!</div>:
             <div  className={`slideContainer`} style={sliderStyle}>
               { 
-                mes.map((e,key)=>{
+                mes?.map((e,key)=>{
                   return <div key={key} className='slide' style={{color:""}}>
                     <div>
                       <div style={{display:"flex", justifyContent:"flex-end", margin:"3px"}}>
                         <ModalDeletarMes idMes={e.id} id={e.id}/>
                       </div>
                       <div className='sliderList'>
-                        <h3 style={{color:"", textAlign:"center"}}>{e.mesReferente}</h3>
+                        <h3 style={{color:"", textAlign:"center"}}>{e?.mesReferente}</h3>
                         <ListaEntradasSaidas  list={e.ganhos} tipo={"entrada"} handleAtualiza={handleAtualiza}/>
                         <ListaEntradasSaidas  list={e.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
                       </div>                    
