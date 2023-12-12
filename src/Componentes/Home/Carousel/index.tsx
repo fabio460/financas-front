@@ -56,7 +56,7 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
         <div className='slides' ref={minhaDivRef}>
           {
             mes.length !== 0 && 
-            <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"20px"}}>
               <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={active === 0 ? true : false}>
                 <ArrowBackIosNewIcon />
               </IconButton>
@@ -85,7 +85,7 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
                         <ListaEntradasSaidas  list={e.contas_A_Pagar} tipo={"saida"} handleAtualiza={handleAtualiza}/>
                       </div>                    
                       <AppBar position="absolute"  color="default" 
-                         sx={{ top: 'auto', bottom: 0, display:"", zIndex:1 }}>
+                         sx={{ top: 'auto', bottom: 0, display:"", zIndex:1, paddingBottom:"10px" }}>
                           <Toolbar>
                             <ModalAdicionarEntradas mes={e} handleAtualiza={handleAtualiza}/>
                             <ModalAdicionarConta mes={e}  handleAtualiza={handleAtualiza}/>
