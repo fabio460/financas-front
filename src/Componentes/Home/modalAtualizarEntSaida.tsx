@@ -22,7 +22,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, elem, close}:{id:string, tipo:string, handleAtualiza:any, close:any,elem:entradasSaidasType}) {
+export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, CloseAll,elem, close}:{id:string, CloseAll:any, tipo:string, handleAtualiza:any, close:any,elem:entradasSaidasType}) {
   const [open, setOpen] = React.useState(false);
   const [nome, setNome] = useState(elem.nome)
   const [valor, setValor] = useState(elem.valor)
@@ -53,6 +53,7 @@ export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, elem, 
     }
     setLoading(false)
     close()
+    CloseAll()
   }
   return (
     <React.Fragment>

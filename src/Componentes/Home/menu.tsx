@@ -43,8 +43,8 @@ export default function FadeMenu({id, tipo, handleAtualiza, elem}:{id:string, ti
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <ModalDeletarEntradaSaida id={id} tipo={tipo} handleAtualiza={handleAtualiza}/>
-        <ModalAtualizarEntSaida id={id} tipo={tipo} handleAtualiza={handleAtualiza} elem={elem} close={handleClose}/>
+        <ModalDeletarEntradaSaida CloseAll={handleClose} id={id} tipo={tipo} handleAtualiza={handleAtualiza}/>
+        <ModalAtualizarEntSaida CloseAll={handleClose} id={id} tipo={tipo} handleAtualiza={handleAtualiza} elem={elem} close={handleClose}/>
       </Menu>
     </div>
   );

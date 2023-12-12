@@ -11,11 +11,12 @@ import { deletarContas_a_PagarApi } from '../Api/contas_a_pagarApi';
 import { deletarGanhos } from '../Api/ganhosApi';
 import { IconButton } from "@mui/material";
 import BtnLoading from '../btnLoading';
-export default function ModalDeletarEntradaSaida({id, tipo, handleAtualiza}:{id:string, tipo:string, handleAtualiza:any}) {
+export default function ModalDeletarEntradaSaida({id, tipo, CloseAll, handleAtualiza}:{id:string,CloseAll:any, tipo:string, handleAtualiza:any}) {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false)
   const handleClickOpen = () => {
     setOpen(true);
+    
   };
 
   const handleClose = () => {
@@ -32,6 +33,7 @@ export default function ModalDeletarEntradaSaida({id, tipo, handleAtualiza}:{id:
     }
     handleClose()
     setLoading(false)
+    CloseAll()
   }
   return (
     <React.Fragment>
