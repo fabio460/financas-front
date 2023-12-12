@@ -9,10 +9,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { deletarMesApi, listarMesApi } from '../Api/mesApi';
 import { corVermelho } from '../Cores';
+import BtnLoading from '../btnLoading';
 
 export default function ModalDeletarMes({idMes, id}:{idMes:string, id:string}) {
   const [open, setOpen] = React.useState(false);
-
+  const [loading, setLoading] = React.useState(false)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -21,8 +22,8 @@ export default function ModalDeletarMes({idMes, id}:{idMes:string, id:string}) {
     setOpen(false);
   };
   const deletarMes = async()=>{
+    setLoading(true)
     const res = await deletarMesApi(idMes)
-    //alert(res)
     const list = await listarMesApi(id)
     localStorage.setItem("step",JSON.stringify(0))
     window.location.reload()
@@ -48,7 +49,10 @@ export default function ModalDeletarMes({idMes, id}:{idMes:string, id:string}) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={deletarMes} variant='contained' color='success'>Confirmar</Button>
+          {
+            loading ? <Button color='success' variant='contained' ><BtnLoading/></Button>:
+            <Button onClick={deletarMes} variant='contained' color='success'>Confirmar</Button>
+          }
           <Button onClick={handleClose} autoFocus color='error' variant='contained'>
             Cancelar
           </Button>

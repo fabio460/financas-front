@@ -10,9 +10,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { deletarContas_a_PagarApi } from '../Api/contas_a_pagarApi';
 import { deletarGanhos } from '../Api/ganhosApi';
 import { IconButton } from "@mui/material";
+import BtnLoading from '../btnLoading';
 export default function ModalDeletarEntradaSaida({id, tipo, handleAtualiza}:{id:string, tipo:string, handleAtualiza:any}) {
   const [open, setOpen] = React.useState(false);
-
+  const [loading, setLoading] = React.useState(false)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -21,17 +22,16 @@ export default function ModalDeletarEntradaSaida({id, tipo, handleAtualiza}:{id:
     setOpen(false);
   };
   const deletar = async()=>{
+    setLoading(true)
     if (tipo === "saida") {      
       const res = await deletarContas_a_PagarApi(id)
-      alert(JSON.stringify(res))
       handleAtualiza()
-      handleClose()
     }else{
       const res = await deletarGanhos(id)
-      //alert(JSON.stringify(res))
       handleAtualiza()
-      handleClose()
     }
+    handleClose()
+    setLoading(false)
   }
   return (
     <React.Fragment>
@@ -53,8 +53,11 @@ export default function ModalDeletarEntradaSaida({id, tipo, handleAtualiza}:{id:
             Clique em "CONFIRMAR DELEÇÃO" se estiver certo disso
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={deletar} color='success' variant='contained'>confirmar</Button>
+        <DialogActions>          
+          {
+            loading ? <Button color='success' variant='contained' ><BtnLoading/></Button>:
+            <Button onClick={deletar} color='success' variant='contained'>confirmar</Button>
+          }
           <Button onClick={handleClose} autoFocus color='error' variant='contained'>
             cancelar
           </Button>

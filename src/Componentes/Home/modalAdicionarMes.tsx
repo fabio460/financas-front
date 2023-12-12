@@ -13,10 +13,12 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { adicionarMesApi, listarMesApi } from '../Api/mesApi';
 import { corLaranja } from '../Cores';
+import BtnLoading from '../btnLoading';
 
 export default function ModalAdicionarMes({id}:{id:string}) {
   const [open, setOpen] = React.useState(false);
   const [Mes, setMes] = React.useState('');
+  const [loading, setLoading] = React.useState(false)
 
   const handleChange = (event: SelectChangeEvent) => {
     setMes(event.target.value);
@@ -34,6 +36,7 @@ export default function ModalAdicionarMes({id}:{id:string}) {
       alert("adicione um mes!")
       return null
     }
+    setLoading(true)
     const r = await adicionarMesApi(id, Mes); 
     const m = await listarMesApi(id)
     localStorage.setItem("step",JSON.stringify(m.length-1))
@@ -77,7 +80,10 @@ export default function ModalAdicionarMes({id}:{id:string}) {
         
           </DialogContent>
           <DialogActions>
-            <Button onClick={adicionarMes} variant='contained' color={"success"}>Adicionar</Button>
+            {
+              loading ? <Button color='success' variant='contained' ><BtnLoading/></Button>:
+              <Button onClick={adicionarMes} variant='contained' color={"success"}>Adicionar</Button>              
+            }
             <Button onClick={handleClose} variant='contained' color='error'>Cancelar</Button>
           </DialogActions>
         </Dialog>

@@ -11,6 +11,7 @@ import { MenuItem, TextField } from '@mui/material';
 import { entradasSaidasType } from '../../types';
 import { atualizarContas_a_PagarApi } from '../Api/contas_a_pagarApi';
 import { atualizarGanhos } from '../Api/ganhosApi';
+import BtnLoading from '../btnLoading';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -25,6 +26,8 @@ export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, elem, 
   const [open, setOpen] = React.useState(false);
   const [nome, setNome] = useState(elem.nome)
   const [valor, setValor] = useState(elem.valor)
+  const [loading, setLoading] = useState(false)
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -38,6 +41,7 @@ export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, elem, 
   };
 
   const atualizar = async ()=>{
+    setLoading(true)
     if (tipo === "saida") { 
         await atualizarContas_a_PagarApi(elem.id, nome, valor, elem.idMes)
         handleAtualiza()
@@ -47,6 +51,7 @@ export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, elem, 
         handleAtualiza()
         handleClose()
     }
+    setLoading(false)
     close()
   }
   return (
@@ -62,19 +67,15 @@ export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, elem, 
         <DialogTitle>{"Area de atualização de dados"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            {/* <div className='inputGlobalContainer'>
-                <input onChange={e=>setNome(e.target.value)} defaultValue={nome} className='inputGlobal' placeholder='Nome'/>
-            </div>
-            <div className='inputGlobalContainer'>
-                <input onChange={e=>setValor(parseFloat(e.target.value))} defaultValue={valor.toString()} className='inputGlobal' placeholder='Valor'/>
-            </div> */}
             <TextField defaultValue={nome.toString()} type='text' fullWidth placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
             <TextField defaultValue={valor.toString()} type='text' sx={{mt:3}} fullWidth placeholder='Valor' onChange={e=>setValor(parseFloat(e.target.value))}/>
-
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={atualizar} color='success' variant='contained'>confirmar</Button>
+          {
+            loading ? <Button color='success' variant='contained' ><BtnLoading/></Button>:
+            <Button onClick={atualizar} color='success' variant='contained'>confirmar</Button>
+          }
           <Button onClick={handleClose} color='error' variant='contained'>cancelar</Button>
         </DialogActions>
       </Dialog>

@@ -14,10 +14,14 @@ import { AppBar, Input, Toolbar, Typography } from '@mui/material';
 import FooterBar from '../footerBar';
 import { useAppDispatch } from '../../Redux/hooks';
 import { setSearch } from '../../Redux/Reducers/searchReducer';
+import CarouselLoading from './carouselLoading';
 
 export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtualiza:any}) {
   const [active, setActive] = useState(localStorage.getItem("step") ? parseInt(localStorage.getItem("step") as string):0)
   const [loading, setloading] = useState(false)
+  const [sizeSlide, setsizeSlide] = useState(-1)
+  const minhaDivRef = useRef<any>(null);
+  
   const proximo = ()=>{
     if (active < ( mes.length - 1)) {      
       localStorage.setItem("step",JSON.stringify(active + 1))
@@ -31,10 +35,9 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
     }
   }
   
-  const [sizeSlide, setsizeSlide] = useState(-1)
-  const minhaDivRef = useRef<any>(null);
     
   setTimeout(() => {
+    
     const larguraDaDiv = minhaDivRef.current?.offsetWidth;
     if (minhaDivRef) {
       setsizeSlide(larguraDaDiv)
@@ -52,7 +55,13 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
   return (
     <div >
       {
-        (sizeSlide === -1) ? <div>carregando</div>:
+        (sizeSlide === -1) ? 
+        <div className='slides'>
+          <CarouselLoading/>
+        </div>:
+        loading ? <div className='slides'>
+          <CarouselLoading/>
+        </div>:
         <div className='slides' ref={minhaDivRef}>
           {
             mes.length !== 0 && 

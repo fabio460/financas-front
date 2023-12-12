@@ -13,6 +13,7 @@ import { adicionarGanhos } from '../Api/ganhosApi';
 import { corDark, corDosItens, corVerde } from '../Cores';
 import { IconButton, TextField } from '@mui/material';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import BtnLoading from '../btnLoading';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -27,6 +28,7 @@ export default function ModalAdicionarEntradas({mes, handleAtualiza}:{mes:mesTyp
   const [open, setOpen] = React.useState(false);
   const [nome, setNome] = useState("")
   const [valor, setValor] = useState(0)
+  const [loading, setLoading] = useState(false)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -36,17 +38,14 @@ export default function ModalAdicionarEntradas({mes, handleAtualiza}:{mes:mesTyp
   };
 
   const handleAdicionar = async()=>{
+    setLoading(true)
     const res = await adicionarGanhos(nome, valor, mes.id);
-    //alert(JSON.stringify(res))
-    //window.location.reload()
     handleAtualiza()
+    setLoading(false)
     handleClose()
   }
   return (
     <React.Fragment>
-      {/* <Button variant="outlined" onClick={handleClickOpen} className='buttons'>
-        entradas
-      </Button> */}
       <IconButton onClick={handleClickOpen}>
         <ArrowCircleUpIcon sx={{width:"35px", height:"35px", color:corVerde}} />
       </IconButton>
@@ -61,19 +60,15 @@ export default function ModalAdicionarEntradas({mes, handleAtualiza}:{mes:mesTyp
         <DialogTitle sx={{color:corVerde}}>Entradas mês de {mes.mesReferente}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            {/* <div style={{background:corDark}} className='inputGlobalContainer'>
-              <input onChange={e=>setNome(e.target.value)} className='inputGlobal' placeholder='Nome'/>
-            </div>
-            <div className='inputGlobalContainer'>
-              <input onChange={e=>setValor(parseFloat(e.target.value))} className='inputGlobal' placeholder='Valor'/>
-            </div> */}
             <TextField type='text' fullWidth placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
             <TextField type='text' sx={{mt:3}} fullWidth placeholder='Valor' onChange={e=>setValor(parseFloat(e.target.value))}/>
-
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAdicionar} color='success' variant='contained'>Confirmar</Button>
+          {
+            loading ? <Button color='success' variant='contained' ><BtnLoading/></Button>:
+            <Button onClick={handleAdicionar} color='success' variant='contained'>Confirmar</Button>
+          }
           <Button onClick={handleClose} color='error' variant='contained'>Cancelar</Button>
         </DialogActions>
       </Dialog>

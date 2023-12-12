@@ -23,12 +23,9 @@ export default function Home() {
     <CssBaseline />
     <main>
       <div>
-          {/* <h2>Bem vindo {usuarioLogado.nome}</h2>
-          <button onClick={logouf}>sair</button> */}
           <ResponsiveAppBar usuario={usuarioLogado} dark={dark} setDark={setDark}/>
           <Contas id={usuarioLogado.id} />
           <ModalAdicionarMes id={usuarioLogado.id}/>
-          {/* <button onClick={()=> deletarUsuario()}>deletar conta</button> */}
       </div>
     </main>
   </ThemeProvider>
