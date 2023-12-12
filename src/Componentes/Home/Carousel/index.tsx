@@ -85,7 +85,6 @@ export default function Carousel({mes, handleAtualiza}:{mes:mesType[],handleAtua
                 mes?.map((e,key)=>{
                   return <div key={key} className='slide' style={{color:""}}>
                     <div>
-                      {e.mesReferente}
                       <div style={{display:"flex", justifyContent:"flex-end", margin:"3px"}}>
                         <ModalDeletarMes idMes={e.id} id={e.id}/>
                       </div>
