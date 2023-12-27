@@ -11,9 +11,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import { adicionarMesApi, listarMesApi } from '../Api/mesApi';
-import { corLaranja } from '../Cores';
-import BtnLoading from '../btnLoading';
+import { adicionarMesApi, listarMesApi } from '../../Api/mesApi';
+import { corLaranja } from '../../Cores';
+import BtnLoading from '../../btnLoading';
 
 export default function ModalAdicionarMes({id}:{id:string}) {
   const [open, setOpen] = React.useState(false);
@@ -49,11 +49,14 @@ export default function ModalAdicionarMes({id}:{id:string}) {
   return (
     <div>
       <React.Fragment>
-          <Box sx={{ '& > :not(style)': { m: 0, position:"absolute", bottom:"15px", right:"8px", zIndex:1 } }}>
-              <Fab sx={{bgcolor:corLaranja}} color="primary" aria-label="add" onClick={handleClickOpen}>
-                  <AddIcon />
-              </Fab>
-          </Box>
+          <div style={{background:"", position:"fixed", bottom:20, left:"40%", right:"40%",display:"flex",justifyContent:"center"}}>
+            
+            <Box sx={{ '& > :not(style)': { m: 0, background:"",zIndex:1 } }}>
+                <Fab sx={{bgcolor:corLaranja}} color="primary" aria-label="add" onClick={handleClickOpen}>
+                    <AddIcon />
+                </Fab>
+            </Box>
+          </div>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Adicione um mês</DialogTitle>
           <DialogContent>

@@ -15,7 +15,7 @@ import LiveTvIcon from '@mui/icons-material/LiveTv';
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
-import { checkedListType, entradasSaidasType } from '../../types';
+import { checkedListType, contasType, entradasSaidasType } from '../../types';
 import { formatoMonetario } from '../../metodosUteis';
 import FadeMenu from './menu';
 import { ignoreMaiusMinusAcent } from "../../metodosUteis";
@@ -23,7 +23,7 @@ import { corDosItens, corVerde, corVermelho } from '../Cores';
 import { CheckBox } from '@mui/icons-material';
 import { Checkbox } from '@mui/material';
 
-export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:entradasSaidasType[], tipo:string, handleAtualiza:any}) {
+export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:contasType[], tipo:string, handleAtualiza:any}) {
 
     return (
         <div>

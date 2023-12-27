@@ -16,6 +16,20 @@ export const loginApi = async(email:string, senha:string)=>{
    return response;
 }
 
+export const listarUsuarioPorIdApi = async(id:string)=>{
+    let response = "" 
+    await fetch(link+"usuario/listarUsuario/"+id,{
+     headers:{
+         "Content-Type":"application/json"
+     },
+    })
+    .then(r=>r.json())
+    .then(r=>{
+     response = r
+    })
+    return response;
+ }
+
 export const cadastroApi = async(email:string, senha:string, nome:string)=>{
     let response = "" 
     await fetch(link+"usuario/criarUsuario",{

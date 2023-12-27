@@ -2,6 +2,33 @@ export type usuarioLogadoType={
     id:string
     email:string
     nome:string
+    senha:string
+
+}
+
+export type usuarioType = {
+    id:string
+    email:string
+    nome:string
+    senha:string
+    mes:mesType2[]
+}
+
+export type contasType = {
+    id:string
+    nome:string
+    valor:number
+    idMes:string
+    selecionado:boolean
+    tipo:string
+}
+
+export type mesType2 = {
+    id:string
+    contas:contasType[]
+    idDoUsuario:string
+    mesReferente:string
+    numero:number
 }
 
 export type mesType ={
@@ -21,6 +48,10 @@ export type mesType ={
         idMes:string
     }[]
 }
+
+
+
+
 
 export type entradasSaidasType={
     id:string

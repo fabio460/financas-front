@@ -7,11 +7,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import MenuItem from '@mui/material/MenuItem';
 
-import { deletarContas_a_PagarApi } from '../Api/contas_a_pagarApi';
-import { deletarGanhos } from '../Api/ganhosApi';
+import { deletarContas_a_PagarApi } from '../../Api/contas_a_pagarApi';
+import { deletarGanhos } from '../../Api/ganhosApi';
 import { IconButton } from "@mui/material";
-import BtnLoading from '../btnLoading';
-export default function ModalDeletarEntradaSaida({id, tipo, CloseAll, handleAtualiza}:{id:string,CloseAll:any, tipo:string, handleAtualiza:any}) {
+import BtnLoading from '../../btnLoading';
+import { deletarContasApi } from '../../Api/contasApi';
+import { contasType } from '../../../types';
+export default function ModalDeletarEntradaSaida({id, tipo, CloseAll, handleAtualiza, atual, disp, setAtualizarRedux, elem}:{id:string,CloseAll:any, tipo:string, handleAtualiza:any, disp?:any, setAtualizarRedux?:any, atual?:any, elem?:contasType}) {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false)
   const handleClickOpen = () => {
@@ -24,13 +26,8 @@ export default function ModalDeletarEntradaSaida({id, tipo, CloseAll, handleAtua
   };
   const deletar = async()=>{
     setLoading(true)
-    if (tipo === "saida") {      
-      const res = await deletarContas_a_PagarApi(id)
-      handleAtualiza()
-    }else{
-      const res = await deletarGanhos(id)
-      handleAtualiza()
-    }
+    await deletarContasApi(id, atual, disp, setAtualizarRedux)
+    disp(setAtualizarRedux(!atual))
     handleClose()
     setLoading(false)
     CloseAll()
@@ -47,7 +44,7 @@ export default function ModalDeletarEntradaSaida({id, tipo, CloseAll, handleAtua
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Deseja realmente deletar este item?"}
+          {"Deseja realmente deletar o item "+elem?.nome+"?"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">

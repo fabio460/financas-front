@@ -5,13 +5,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import ModalDeletarEntradaSaida from './modalDeletarEntSaida';
+import ModalDeletarEntradaSaida from './Modais/modalDeletarEntSaida';
 import { corDosItens } from '../Cores';
-import ModalAtualizarEntSaida from './modalAtualizarEntSaida';
-import { entradasSaidasType } from '../../types';
+import ModalAtualizarEntSaida from './Modais/modalAtualizarEntSaida';
+import { contasType, entradasSaidasType } from '../../types';
 
 
-export default function FadeMenu({id, tipo, handleAtualiza, elem}:{id:string, tipo:string, handleAtualiza:any, elem:entradasSaidasType}) {
+export default function FadeMenu({id, tipo, handleAtualiza, elem, atual, disp, setAtualizarRedux}:{id:string, tipo:string, handleAtualiza:any, elem:contasType, disp?:any, setAtualizarRedux?:any, atual?:any}) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -43,8 +43,25 @@ export default function FadeMenu({id, tipo, handleAtualiza, elem}:{id:string, ti
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <ModalDeletarEntradaSaida CloseAll={handleClose} id={id} tipo={tipo} handleAtualiza={handleAtualiza}/>
-        <ModalAtualizarEntSaida CloseAll={handleClose} id={id} tipo={tipo} handleAtualiza={handleAtualiza} elem={elem} close={handleClose}/>
+        <ModalDeletarEntradaSaida 
+          CloseAll={handleClose}
+          id={id} 
+          tipo={tipo} 
+          handleAtualiza={handleAtualiza}
+          disp={disp} 
+          setAtualizarRedux={setAtualizarRedux}
+          atual={atual}    
+          elem={elem}
+        />
+        <ModalAtualizarEntSaida 
+          CloseAll={handleClose} 
+          id={id} tipo={tipo} 
+          handleAtualiza={handleAtualiza}
+          elem={elem} close={handleClose}
+          disp={disp} 
+          setAtualizarRedux={setAtualizarRedux}
+          atual={atual} 
+        />
       </Menu>
     </div>
   );

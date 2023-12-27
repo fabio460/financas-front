@@ -1,8 +1,8 @@
 import React from 'react'
 import CircularProgress from '@mui/material/CircularProgress';
 
-export default function BtnLoading() {
+export default function BtnLoading({tam, marginH, marginV}:{tam?:number,marginV?:string, marginH?:string}) {
   return (
-    <CircularProgress size={25} color='inherit' sx={{margin:"0px 25px"}}/>
+    <CircularProgress size={tam?tam:25} color='inherit' sx={{margin:`${marginH?marginH:'0'}px ${marginV?marginV:'25'}px`}}/>
   )
 }

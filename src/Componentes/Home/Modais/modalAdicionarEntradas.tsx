@@ -7,12 +7,14 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { mesType } from '../../types';
-import { adicionarContas_a_PagarApi } from '../Api/contas_a_pagarApi';
+import { mesType } from '../../../types';
+import { adicionarContas_a_PagarApi } from '../../Api/contas_a_pagarApi';
+import { adicionarGanhos } from '../../Api/ganhosApi';
+import { corDark, corDosItens, corVerde } from '../../Cores';
 import { IconButton, TextField } from '@mui/material';
-import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
-import { corVermelho } from '../Cores';
-import BtnLoading from '../btnLoading';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import BtnLoading from '../../btnLoading';
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
@@ -22,11 +24,11 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ModalAdicionarConta({mes, handleAtualiza}:{mes:mesType, handleAtualiza:any}) {
+export default function ModalAdicionarEntradas({mes, handleAtualiza}:{mes:mesType, handleAtualiza:any}) {
   const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = useState(false)
   const [nome, setNome] = useState("")
   const [valor, setValor] = useState(0)
+  const [loading, setLoading] = useState(false)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -37,27 +39,26 @@ export default function ModalAdicionarConta({mes, handleAtualiza}:{mes:mesType, 
 
   const handleAdicionar = async()=>{
     setLoading(true)
-    const res = await adicionarContas_a_PagarApi(nome, valor, mes.id);
+    const res = await adicionarGanhos(nome, valor, mes.id);
+    console.log(res+mes.mesReferente)
     handleAtualiza()
     setLoading(false)
     handleClose()
   }
   return (
     <React.Fragment>
-      {/* <Button color='error' variant="outlined" onClick={handleClickOpen}>
-        saidas
-      </Button> */}
       <IconButton onClick={handleClickOpen}>
-        <ArrowCircleDownIcon sx={{width:"35px", height:"35px", color:corVermelho}}/>
+        <ArrowCircleUpIcon sx={{width:"35px", height:"35px", color:corVerde}} />
       </IconButton>
       <Dialog
+        component={"div"} 
         open={open}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle sx={{color:corVermelho}}>Saidas mês de {mes.mesReferente}</DialogTitle>
+        <DialogTitle sx={{color:corVerde}}>Entradas mês de {mes.mesReferente}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             <TextField type='text' fullWidth placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
@@ -67,7 +68,7 @@ export default function ModalAdicionarConta({mes, handleAtualiza}:{mes:mesType, 
         <DialogActions>
           {
             loading ? <Button color='success' variant='contained' ><BtnLoading/></Button>:
-           <Button onClick={handleAdicionar} color='success' variant='contained'>Confirmar</Button>
+            <Button onClick={handleAdicionar} color='success' variant='contained'>Confirmar</Button>
           }
           <Button onClick={handleClose} color='error' variant='contained'>Cancelar</Button>
         </DialogActions>

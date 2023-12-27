@@ -130,13 +130,13 @@ function Sair() {
             Finanças
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {[].map((page) => (
+            {[].map((page,key) => (
                 <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                {page}
+                  {page}
               </Button>
             ))}
           </Box>
@@ -164,9 +164,9 @@ function Sair() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting:any) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {settings.map((setting:any, key:any) => (
+                <MenuItem key={key} onClick={handleCloseUserMenu}>
+                  <Typography  component={"div"}>{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -174,6 +174,7 @@ function Sair() {
         </Toolbar>
       </Container>
     </AppBar>
+ 
   );
 }
 export default ResponsiveAppBar;

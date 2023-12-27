@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import usuarioRedux from './Reducers/usuarioRedux'
 import searchReducer from './Reducers/searchReducer'
+import usuarioAutenticadoReducer from './Reducers/usuarioAutenticadoReducer'
+import atualizaRedux from './Reducers/atualizaRedux'
 export const store = configureStore({
   reducer: {
+    atualizaRedux,
     searchReducer,
     usuarioRedux,
+    usuarioAutenticadoReducer,
   },
 })
 

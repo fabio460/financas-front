@@ -7,11 +7,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
-import { deletarMesApi, listarMesApi } from '../Api/mesApi';
-import { corVermelho } from '../Cores';
-import BtnLoading from '../btnLoading';
+import { deletarMesApi, listarMesApi } from '../../Api/mesApi';
+import { corVermelho } from '../../Cores';
+import BtnLoading from '../../btnLoading';
+import { Chip } from '@mui/material';
 
-export default function ModalDeletarMes({idMes, id}:{idMes:string, id:string}) {
+export default function ModalDeletarMes({idMes, id}:{idMes?:string, id?:string}) {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false)
   const handleClickOpen = () => {
@@ -23,15 +24,17 @@ export default function ModalDeletarMes({idMes, id}:{idMes:string, id:string}) {
   };
   const deletarMes = async()=>{
     setLoading(true)
-    const res = await deletarMesApi(idMes)
-    const list = await listarMesApi(id)
+    const res = await deletarMesApi(idMes as string)
+    //const list = await listarMesApi(id)
     localStorage.setItem("step",JSON.stringify(0))
     window.location.reload()
     handleClose()
   }
   return (
     <React.Fragment>
-      <IconButton onClick={handleClickOpen}><DeleteIcon sx={{color:corVermelho}}/></IconButton>
+      {/* <IconButton onClick={handleClickOpen}><DeleteIcon sx={{color:corVermelho}}/></IconButton> */}
+      <Chip label="Deletar mês" variant="outlined" onClick={handleClickOpen} />
+
       <Dialog
         open={open}
         onClose={handleClose}

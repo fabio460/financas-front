@@ -4,3 +4,27 @@
 .entradas{
    color: green;
 }
+
+.contasContainer{
+   margin: 0px 1%;
+}
+.stack{
+   padding-left: 0.5%;
+}
+.listaContas{
+   padding-top: 10px;
+   position: relative;
+   height: 400px;
+   overflow-y: scroll;
+}
+.listaContas::-webkit-scrollbar{
+   width: 10px;
+}
+.listaContas::-webkit-scrollbar-thumb{
+   background-color: grey;
+}
+@media (max-width:500px) {
+   .stack{
+      padding-left: 2%;
+   }
+}

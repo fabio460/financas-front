@@ -1,4 +1,4 @@
-import { entradasSaidasType, mesType } from "./types";
+import { contasType, entradasSaidasType, mesType } from "./types";
 import ImageIcon from '@mui/icons-material/Image';
 
 export const emailValido = (email:string)=>{
@@ -96,3 +96,16 @@ export const ordenaLista = (mes:mesType[])=>{
     return e?.e
    })
 }
+
+export const somaValores = (array:contasType[])=>{
+    const soma = array.reduce((acc, elem)=>{
+        return elem.selecionado ? 
+           elem.tipo === "entrada" ?
+             acc+=elem.valor: acc-=elem.valor:acc+=0
+    },0)
+    return formatoMonetario(soma)
+}
+export const trocaVirgulaPorPonto = (valor:string)=>{
+    const  strComPonto = valor.replace(",",".")
+    return parseFloat(strComPonto)
+ }
