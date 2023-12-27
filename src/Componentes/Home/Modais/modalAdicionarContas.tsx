@@ -84,7 +84,7 @@ export default function ModalAdicionarConta({handleAtualiza,mes}:{handleAtualiza
     setLoading(false)
     handleClose()
   }
-  console.log(age)
+  
   return (
     <React.Fragment>
       {/* <IconButton  onClick={handleClickOpen}>
