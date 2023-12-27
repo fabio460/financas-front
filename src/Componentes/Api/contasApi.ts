@@ -81,3 +81,23 @@ export const inverterContaSelecionadaApi = async(id:string, disp?:any, setAtuali
     })
     return response;
 }
+
+export const selecionarTudoApi = async(idMes:string, selecionado:boolean,disp?:any, setAtualizarRedux?:any, atual?:any,  setCarregandoBtn?:any)=>{
+    let response = ""
+     fetch(link+"contas/selecionartudo",{
+        headers:{
+            "Content-Type":"application/json"
+        },
+        method:"put",
+        body:JSON.stringify({selecionado, idMes})
+    })
+    .then(r=>r.json())
+    .then(r=>{
+        // disp(setAtualizarRedux(!atual))
+        // setTimeout(() => {
+        //   //  setCarregandoBtn({id, sel:false})   
+        // }, 300);
+        response = r
+    })
+    return response;
+}

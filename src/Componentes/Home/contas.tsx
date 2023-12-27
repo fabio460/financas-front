@@ -19,7 +19,7 @@ import { Avatar, Checkbox, Chip, Divider, IconButton, ListItem, ListItemAvatar, 
 import { corDosItens, corVerde, corVermelho } from '../Cores';
 import ModalAdicionarConta from './Modais/modalAdicionarContas';
 import FadeMenu from './menu';
-import { atualizarContasApi, inverterContaSelecionadaApi } from '../Api/contasApi';
+import { atualizarContasApi, inverterContaSelecionadaApi, selecionarTudoApi } from '../Api/contasApi';
 import { setAtualizarRedux } from '../Redux/Reducers/atualizaRedux';
 import BtnLoading from '../btnLoading';
 import ModalDeletarMes from './Modais/modalDeletarMes';
@@ -94,6 +94,16 @@ function Contas({id}:{id:string}) {
     setCarregandoBtn({id,sel:true})
     inverterContaSelecionadaApi(id, disp, setAtualizarRedux, atual, setCarregandoBtn)
   }
+  const selecionarTudo = async(e:any)=>{
+      const c = e.target?.checked
+      if (c) {        
+        await selecionarTudoApi(Mes.id,true)
+        disp(setAtualizarRedux(!atual))
+      } else {
+        await selecionarTudoApi(Mes.id,false)
+        disp(setAtualizarRedux(!atual))
+      }
+  }
   return (
     <div className='contasContainer'> 
       {
@@ -115,6 +125,11 @@ function Contas({id}:{id:string}) {
               <ModalAdicionarConta mes={Mes} handleAtualiza={handleAtualiza}/>
               <ModalDeletarMes idMes={Mes.id as string} />
             </Stack>
+            <Stack direction="row"  sx={{mt:2, display:"flex", alignItems:"center"}} >
+              <Checkbox onChange={selecionarTudo} defaultChecked/>
+              <span>Selecionar tudo</span>
+            </Stack>
+
             <div className='listaContas'>
               {
                 Mes.contas.map((c, keyC)=>{

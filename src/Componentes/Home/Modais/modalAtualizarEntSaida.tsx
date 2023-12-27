@@ -43,7 +43,7 @@ export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, CloseA
     setOpen(false);
     close()
     CloseAll()
-  };
+  };  
 
   const atualizar = async ()=>{
     setLoading(true)

@@ -24,7 +24,6 @@ import { CheckBox } from '@mui/icons-material';
 import { Checkbox } from '@mui/material';
 
 export default function ListaEntradasSaidas({list, tipo, handleAtualiza}:{list:contasType[], tipo:string, handleAtualiza:any}) {
-
     return (
         <div>
             <List sx={{ width: '100%'}}>
