@@ -25,9 +25,10 @@ export default function Home() {
     <CssBaseline />
     <main>
       <div>
-          <ResponsiveAppBar usuario={usuarioLogado} dark={dark} setDark={setDark}/>
+          {/* <ResponsiveAppBar usuario={usuarioLogado} dark={dark} setDark={setDark}/>
           <Contas id={usuarioLogado.id} />
-          <ModalAdicionarMes id={usuarioLogado.id}/>
+          <ModalAdicionarMes id={usuarioLogado.id}/> */}
+          home
       </div>
     </main>
   </ThemeProvider>
