@@ -118,8 +118,11 @@ function Contas({id}:{id:string}) {
                 <ArrowForwardIosIcon/>
               </IconButton>
             </div>
-            <div style={{display:"flex", justifyContent:"center", width:"100%"}}>
-                <h2 style={{display:"flex", justifyContent:""}}>{somaValores(Mes.contas)}</h2>
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center",width:"100%", background:""}}>
+              <div style={{marginBottom:15, marginTop:5}}>
+                <div style={{textAlign:"center", color:"grey", fontSize:12}}>Sobrou</div>
+                <h2 style={{display:"flex", justifyContent:"", margin:0, background:""}}>{somaValores(Mes.contas)}</h2>
+              </div>
             </div>
             <Stack direction="row" spacing={1} sx={{ml:"0%"}} className='stack'>
               <ModalAdicionarConta mes={Mes} handleAtualiza={handleAtualiza}/>
