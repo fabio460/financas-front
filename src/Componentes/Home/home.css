@@ -14,7 +14,7 @@
 .listaContas{
    padding-top: 10px;
    position: relative;
-   height: 350px;
+   height: 310px;
    overflow-y: scroll;
 }
 .listaContas::-webkit-scrollbar{

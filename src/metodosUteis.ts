@@ -1,3 +1,4 @@
+import { green, red } from "@mui/material/colors";
 import { contasType, entradasSaidasType, mesType } from "./types";
 import ImageIcon from '@mui/icons-material/Image';
 
@@ -105,6 +106,32 @@ export const somaValores = (array:contasType[])=>{
     },0)
     return formatoMonetario(soma)
 }
+export const somaEntradas = (array:contasType[])=>{
+    const soma = array.reduce((acc, elem)=>{
+        return elem.selecionado && 
+           elem.tipo === "entrada" ? acc+=elem.valor:acc+=0
+    },0)
+    return soma
+}
+
+export const somaSaidas = (array:contasType[])=>{
+    const soma = array.reduce((acc, elem)=>{
+        return elem.selecionado && 
+           elem.tipo === "saida" ? acc+=elem.valor:acc+=0
+    },0)
+    return soma
+}
+
+export const calculos = (array:contasType[])=>{
+
+    let resultadoDivisao = (somaEntradas(array) >= somaSaidas(array)) ? somaSaidas(array)/somaEntradas(array) : -1
+    let porcentagem = (resultadoDivisao * 100).toFixed(2);
+    return {
+        porcentagem: porcentagem+"%",
+        cor: (somaEntradas(array) === 0 && somaSaidas(array) === 0) ? "transparent" : resultadoDivisao === -1 ? "red" : (porcentagem > "50" && porcentagem <= "70") ? "#ffc107" : (porcentagem > "70" && porcentagem <= "90") ? "#ff9800": porcentagem > "90" ? "#e65100":"#00c853"
+    }
+}
+
 export const trocaVirgulaPorPonto = (valor:string)=>{
     const  strComPonto = valor.replace(",",".")
     return parseFloat(strComPonto)

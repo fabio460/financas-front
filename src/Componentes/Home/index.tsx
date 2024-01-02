@@ -6,8 +6,8 @@ import { deletarUsuarioApi, listarUsuarioPorIdApi } from '../Api/usuarioApi';
 import ModalAdicionarMes from './Modais/modalAdicionarMes';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Contas from './contas';
 import ResponsiveAppBar from '../AppBar';
+import HomeBody from './homeBody';
 export default function Home() {
   const usuarioLogado:usuarioLogadoType = useAppSelector(state=>state.usuarioRedux.usuario) 
 
@@ -26,7 +26,7 @@ export default function Home() {
     <main>
       <div>
           <ResponsiveAppBar usuario={usuarioLogado} dark={dark} setDark={setDark}/>
-          <Contas id={usuarioLogado.id} />
+          <HomeBody id={usuarioLogado.id} />
           <ModalAdicionarMes id={usuarioLogado.id}/>
       </div>
     </main>
