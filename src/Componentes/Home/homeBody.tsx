@@ -3,15 +3,16 @@ import { mesType, usuarioType } from '../../types';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import "./home.css"
-import { calculos, ignoreMaiusMinusAcent, ordenaLista, somaValores } from '../../metodosUteis';
+import { calculos, formatoMonetario, ignoreMaiusMinusAcent, ordenaLista, somaEntradas, somaSaidas, somaValores } from '../../metodosUteis';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { Checkbox, IconButton, Stack } from '@mui/material';
-import { corDosItens} from '../Cores';
+import { corDosItens, corVerde, corVermelho} from '../Cores';
 import ModalAdicionarConta from './Modais/modalAdicionarContas';
 import { inverterContaSelecionadaApi, selecionarTudoApi } from '../Api/contasApi';
 import { setAtualizarRedux } from '../Redux/Reducers/atualizaRedux';
 import ModalDeletarMes from './Modais/modalDeletarMes';
 import Contas from './contas';
+import ModalAdicionarMes from './Modais/modalAdicionarMes';
 
 export default function HomeBody({id}:{id:string}) {
   const [mes, setMes] = useState<mesType[]>([])
@@ -86,7 +87,23 @@ export default function HomeBody({id}:{id:string}) {
     <div className='contasContainer'> 
       {
         loading ? <div>carregando tela...</div>:
-        <div>
+        <div className='contasBody'>
+          <div className='ListaDeContas'>
+            <Stack direction="row"  sx={{mt:2, display:"flex", alignItems:"center"}} >
+              <Checkbox onChange={selecionarTudo} defaultChecked/>
+              <span>Selecionar tudo</span>
+            </Stack>
+            <Contas 
+                Mes={Mes}
+                atual={atual}
+                disp={disp}
+                handleAtualiza={handleAtualiza}
+                handleChecked={handleChecked}
+                carregandoBtn={carregandoBtn}
+                setAtualizarRedux={setAtualizarRedux}
+            />
+          </div>
+          <div className='subAppBar'>
             <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"20px"}}>
               <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={mesRef === 0 ? true : false}>
                 <ArrowBackIosNewIcon />
@@ -112,12 +129,51 @@ export default function HomeBody({id}:{id:string}) {
             <Stack direction="row" spacing={1} sx={{ml:"0%"}} className='stack'>
               <ModalAdicionarConta mes={Mes} handleAtualiza={handleAtualiza}/>
               <ModalDeletarMes idMes={Mes.id as string} />
+              <ModalAdicionarMes id={id}/>
             </Stack>
+            <div style={{display:"flex",alignItems:"center", flexDirection:"column",marginTop:"20px"}}>
+              <div style={{color:corVerde}}>Entradas: {formatoMonetario(somaEntradas(Mes.contas))}</div>
+              <div  style={{color:corVermelho}}> Saídas: {formatoMonetario(somaSaidas(Mes.contas))}</div>
+            </div>
+          </div>
+          <div className='subAppBarMobile'>
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"20px"}}>
+              <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={mesRef === 0 ? true : false}>
+                <ArrowBackIosNewIcon />
+              </IconButton>
+              <div style={{textAlign:"center", width:"90px"}}> {Mes?.mesReferente} </div>
+              <IconButton sx={{color:corDosItens}} onClick={proximo} disabled={mesRef === (usuario.mes.length - 1) ? true : false}>
+                <ArrowForwardIosIcon/>
+              </IconButton>
+            </div>
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center",width:"100%", background:""}}>
+              <div style={{marginBottom:15, marginTop:5}}>
+                <div style={{textAlign:"center", color:"grey", fontSize:12}}>Sobrou</div>
+                <h2 style={{textAlign:"center", margin:0, color:somaValores(Mes.contas) < "0" ? "red" : ""}}>
+                  {somaValores(Mes.contas)}            
+                </h2>
+                <div style={{color:resultados.cor, textAlign:"center"}}>
+                  {
+                    resultados.cor === "red" ? "Você esta no vermelho":"Suas dívidas estão comprometendo " + resultados.porcentagem + " do seu salário"
+                  }
+                </div>
+              </div>
+            </div>
+            <Stack direction="row" spacing={1} sx={{ml:"0%"}} className='stack'>
+              <ModalAdicionarConta mes={Mes} handleAtualiza={handleAtualiza}/>
+              <ModalDeletarMes idMes={Mes.id as string} />
+              <ModalAdicionarMes id={id}/>
+            </Stack>
+          </div>
+          <div style={{display:"flex",alignItems:"center", flexDirection:"column",marginTop:"20px"}}>
+              <div style={{color:corVerde}}>Entradas: {formatoMonetario(somaEntradas(Mes.contas))}</div>
+              <div  style={{color:corVermelho}}> Saídas: {formatoMonetario(somaSaidas(Mes.contas))}</div>
+            </div>
+          <div className='ListaDeContasMobile'>
             <Stack direction="row"  sx={{mt:2, display:"flex", alignItems:"center"}} >
               <Checkbox onChange={selecionarTudo} defaultChecked/>
               <span>Selecionar tudo</span>
             </Stack>
-
             <Contas 
                 Mes={Mes}
                 atual={atual}
@@ -127,6 +183,7 @@ export default function HomeBody({id}:{id:string}) {
                 carregandoBtn={carregandoBtn}
                 setAtualizarRedux={setAtualizarRedux}
             />
+          </div>
         </div>
       }
     </div>

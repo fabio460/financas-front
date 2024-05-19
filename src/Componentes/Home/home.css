@@ -10,11 +10,13 @@
 }
 .stack{
    padding-left: 0.5%;
+   display: flex;
+   justify-content: center;
 }
 .listaContas{
    padding-top: 10px;
    position: relative;
-   height: 310px;
+   height: 510px;
    overflow-y: scroll;
 }
 .listaContas::-webkit-scrollbar{
@@ -23,7 +25,50 @@
 .listaContas::-webkit-scrollbar-thumb{
    background-color: grey;
 }
+.contasBody{
+   display: grid;
+   grid-template-columns: 1fr 2fr;
+}
+.subAppBar{
+   
+}
+.subAppBarMobile{
+   display: none;
+}
+.listaDeContasContainer{
+   padding: 7%;
+}
+.ListaDeContasMobile{
+   display: none;
+}
+.ListaDeContas{
+   display: block;
+}
 @media (max-width:500px) {
+   .subAppBarMobile{
+      display: block;
+   }
+   .subAppBar{
+      display: none;
+   }
+   .ListaDeContasMobile{
+      display: block;
+   }
+   .ListaDeContas{
+      display: none;
+   }
+   .listaContas{
+      padding-top: 10px;
+      position: relative;
+      height: 310px;
+      overflow-y: scroll;
+   }
+   .listaDeContasContainer{
+      padding: 0%;
+   }
+   .contasBody{
+      display: block;
+   }
    .stack{
       padding-left: 2%;
    }

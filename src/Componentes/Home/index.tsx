@@ -27,7 +27,7 @@ export default function Home() {
       <div>
           <ResponsiveAppBar usuario={usuarioLogado} dark={dark} setDark={setDark}/>
           <HomeBody id={usuarioLogado.id} />
-          <ModalAdicionarMes id={usuarioLogado.id}/>
+          {/* <ModalAdicionarMes id={usuarioLogado.id}/> */}
       </div>
     </main>
   </ThemeProvider>

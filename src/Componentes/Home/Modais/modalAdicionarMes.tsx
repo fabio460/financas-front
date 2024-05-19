@@ -14,6 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { adicionarMesApi, listarMesApi } from '../../Api/mesApi';
 import { corLaranja } from '../../Cores';
 import BtnLoading from '../../btnLoading';
+import { Chip } from '@mui/material';
 
 export default function ModalAdicionarMes({id}:{id:string}) {
   const [open, setOpen] = React.useState(false);
@@ -49,13 +50,14 @@ export default function ModalAdicionarMes({id}:{id:string}) {
   return (
     <div>
       <React.Fragment>
-          <div style={{background:"", position:"fixed", bottom:20, left:"40%", right:"40%",display:"flex",justifyContent:"center"}}>
+          <div style={{background:"", position:"initial", bottom:20, left:"40%", right:"40%",display:"flex",justifyContent:"center"}}>
             
-            <Box sx={{ '& > :not(style)': { m: 0, background:"",zIndex:1 } }}>
+            {/* <Box sx={{ '& > :not(style)': { m: 0, background:"",zIndex:1 } }}>
                 <Fab sx={{bgcolor:corLaranja}} color="primary" aria-label="add" onClick={handleClickOpen}>
                     <AddIcon />
                 </Fab>
-            </Box>
+            </Box> */}
+            <Chip label="Adicionar mes" onClick={handleClickOpen} />
           </div>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Adicione um mês</DialogTitle>
