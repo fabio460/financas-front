@@ -33,7 +33,7 @@ export default function ModalDeletarMes({idMes, id}:{idMes?:string, id?:string})
   return (
     <React.Fragment>
       {/* <IconButton onClick={handleClickOpen}><DeleteIcon sx={{color:corVermelho}}/></IconButton> */}
-      <Chip label="Deletar mês" variant="outlined" onClick={handleClickOpen} />
+      <Chip label="Deletar mês" variant="outlined" onClick={handleClickOpen} color='error'/>
 
       <Dialog
         open={open}

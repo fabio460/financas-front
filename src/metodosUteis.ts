@@ -93,16 +93,21 @@ export const ordenaLista = (mes:mesType[])=>{
    const ordenado = mesAdd.sort((a,b)=>{
     return (a?.num as number) < (b?.num as number) ? -1 : (a?.num as number) > (b?.num as number) ? 1 : 0
    })
-   return ordenado.map(e=>{
+   const ordenadoPoAno = ordenado.sort((a:any,b:any)=>{
+    return a?.e.Ano < b?.e.Ano ? 1 : a?.e.Ano > b?.e.Ano ? -1 : 0
+   })
+   return ordenadoPoAno.map(e=>{
     return e?.e
    })
 }
 
 export const somaValores = (array:contasType[])=>{
-    const soma = array.reduce((acc, elem)=>{
-        return elem.selecionado ? 
-           elem.tipo === "entrada" ?
-             acc+=elem.valor: acc-=elem.valor:acc+=0
+
+    let soma = array.reduce((acc, elem)=>{
+        return (elem.selecionado) ? 
+           (elem.tipo === "entrada") ?
+             acc+=elem.valor:
+             acc-=elem.valor:acc+=0
     },0)
     return formatoMonetario(soma)
 }
@@ -136,3 +141,59 @@ export const trocaVirgulaPorPonto = (valor:string)=>{
     const  strComPonto = valor.replace(",",".")
     return parseFloat(strComPonto)
  }
+
+export const ordenaListaPorValor = (listaBruta:contasType[], ordem:string)=>{
+    let lista:contasType[] =  []
+    lista = []
+    listaBruta?.map((e, key)=>{
+      lista.push(e)
+    })
+    let listaOrdenada = []
+    switch (ordem) {
+      case "desc":
+          listaOrdenada =  lista?.sort((a,b)=>{
+            return a.valor < b.valor ? 1 : a.valor > b.valor ? -1 : 0; 
+          })     
+        break;
+      case "asc":
+          listaOrdenada =  lista?.sort((a,b)=>{
+              return a.valor > b.valor ? 1 : a.valor < b.valor ? -1 : 0; 
+        })     
+      break; 
+      default:
+        listaOrdenada = lista
+        break;
+    }
+    
+    const entradas:contasType[] = []
+    listaOrdenada.map((e)=>{
+        if (e.tipo==="entrada") {
+               entradas.push(e)
+            }
+        })
+            
+        const saidas:contasType[] = []
+        listaOrdenada.map((e)=>{
+            if (e.tipo==="saida") {
+                saidas.push(e)
+            }
+        })
+      const dizimo = entradas.reduce((cont, elem)=>{
+          return cont+= elem.selecionado ? elem.valor : 0
+      },0)*0.1
+      saidas.unshift(
+          {
+              id:"",
+              idMes:"",
+              nome:"Dízimos",
+              selecionado:true,
+              tipo:"saida",
+              valor:dizimo
+          }
+      )
+    return entradas.concat(saidas)
+} 
+
+export const getPorcentagem = (valor:string)=>{
+    return parseInt(valor.split(".")[0])
+} 

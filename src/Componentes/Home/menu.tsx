@@ -30,6 +30,7 @@ export default function FadeMenu({id, tipo, handleAtualiza, elem, atual, disp, s
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         sx={{color:corDosItens}}
+        disabled={id==="" && true}
       >
         <MoreVertIcon/>
       </IconButton>

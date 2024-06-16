@@ -14,11 +14,12 @@ import AddIcon from '@mui/icons-material/Add';
 import { adicionarMesApi, listarMesApi } from '../../Api/mesApi';
 import { corLaranja } from '../../Cores';
 import BtnLoading from '../../btnLoading';
-import { Chip } from '@mui/material';
+import { Chip, TextField } from '@mui/material';
 
 export default function ModalAdicionarMes({id}:{id:string}) {
   const [open, setOpen] = React.useState(false);
   const [Mes, setMes] = React.useState('');
+  const [ano, setAno] = React.useState<number>(2024)
   const [loading, setLoading] = React.useState(false)
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -37,8 +38,11 @@ export default function ModalAdicionarMes({id}:{id:string}) {
       alert("adicione um mes!")
       return null
     }
+    if (ano === null || ano <= 2000) {
+      alert("O campo ano deve ser especificado acima de 2000")
+    }
     setLoading(true)
-    const r = await adicionarMesApi(id, Mes); 
+    const r = await adicionarMesApi(id, Mes, ano); 
     const m = await listarMesApi(id)
     localStorage.setItem("step",JSON.stringify(m.length-1))
     window.location.reload()
@@ -57,7 +61,7 @@ export default function ModalAdicionarMes({id}:{id:string}) {
                     <AddIcon />
                 </Fab>
             </Box> */}
-            <Chip label="Adicionar mes" onClick={handleClickOpen} />
+            <Chip label="Adicionar mes" onClick={handleClickOpen} color='secondary' variant='outlined'/>
           </div>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Adicione um mês</DialogTitle>
@@ -66,6 +70,13 @@ export default function ModalAdicionarMes({id}:{id:string}) {
                   Adicione o mês das suas contas e depois adicione as entradas e as saidas financeiras, ou seja:
                   quanto entrou e quanto saiu no mês!
               </DialogContentText>
+              <TextField 
+                   fullWidth
+                   defaultValue={ano}
+                   onChange={e=> setAno(parseInt(e.target.value))}
+                   label="Ano "
+                   sx={{mt:2,mb:2}}
+              />
               <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label"></InputLabel>
                   <Select

@@ -1,11 +1,12 @@
 import React,{useEffect, useState} from 'react';
-import { mesType, usuarioType } from '../../types';
+import { contasType, mesType, usuarioType } from '../../types';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import "./home.css"
-import { calculos, formatoMonetario, ignoreMaiusMinusAcent, ordenaLista, somaEntradas, somaSaidas, somaValores } from '../../metodosUteis';
+import { calculos, formatoMonetario, getPorcentagem, ignoreMaiusMinusAcent, ordenaLista, ordenaListaPorValor, somaEntradas, somaSaidas, somaValores } from '../../metodosUteis';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
-import { Checkbox, IconButton, Stack } from '@mui/material';
+import { Avatar, Checkbox, IconButton, Stack } from '@mui/material';
 import { corDosItens, corVerde, corVermelho} from '../Cores';
 import ModalAdicionarConta from './Modais/modalAdicionarContas';
 import { inverterContaSelecionadaApi, selecionarTudoApi } from '../Api/contasApi';
@@ -13,7 +14,9 @@ import { setAtualizarRedux } from '../Redux/Reducers/atualizaRedux';
 import ModalDeletarMes from './Modais/modalDeletarMes';
 import Contas from './contas';
 import ModalAdicionarMes from './Modais/modalAdicionarMes';
-
+import CompressIcon from '@mui/icons-material/Compress';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { emojiAmareloNormal, emojiLaranjaPreocupado, emojiVerdeFeliz, emojiVermelhoTriste } from './emojis';
 export default function HomeBody({id}:{id:string}) {
   const [mes, setMes] = useState<mesType[]>([])
   const [mesRef, setMesRef] = useState(localStorage.getItem("step")?parseInt(localStorage.getItem("step") as string):0)
@@ -53,6 +56,7 @@ export default function HomeBody({id}:{id:string}) {
     getMes()
   },[atualiza])
   let Mes = usuario.mes[mesRef]
+  
   const proximo = ()=>{
     if (mesRef < ( usuario.mes.length - 1)) {      
       localStorage.setItem("step",JSON.stringify(mesRef + 1))
@@ -82,19 +86,63 @@ export default function HomeBody({id}:{id:string}) {
         disp(setAtualizarRedux(!atual))
       }
   }
-  const resultados = calculos(Mes.contas)
+  const [ordem, setOrdem] = useState("nulo")
+  const listaDeContas = ordenaListaPorValor(Mes.contas as contasType[],ordem)
+  const resultados = calculos(listaDeContas)
+  const ordemAsc = ()=>{
+     setOrdem("asc")
+  }
+  const ordemDesc = ()=>{
+    setOrdem("desc")
+  }
+  const ordemNula = ()=>{
+    setOrdem("nulo")
+  }
+
+  function Emoji(por:number) {
+    if ((por > 0 && por < 50)) {
+      return <Avatar sx={{width:70, height:70}}  src={emojiVerdeFeliz}/>
+    }
+    if ((por >= 50 && por < 70)) {
+      return <Avatar sx={{width:70, height:70}}  src={emojiAmareloNormal} />
+    }
+    if ((por >= 70 && por < 90)) {
+      return <Avatar sx={{width:70, height:70}}  src={emojiLaranjaPreocupado} />
+    }
+    if ((por > 90 || por < 0 )) {
+      return <Avatar sx={{width:70, height:70}}  src={emojiVermelhoTriste} />
+    }
+    return <div></div>
+  }
   return (
     <div className='contasContainer'> 
       {
         loading ? <div>carregando tela...</div>:
         <div className='contasBody'>
           <div className='ListaDeContas'>
-            <Stack direction="row"  sx={{mt:2, display:"flex", alignItems:"center"}} >
-              <Checkbox onChange={selecionarTudo} defaultChecked/>
-              <span>Selecionar tudo</span>
-            </Stack>
+            <div style={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
+              <Stack direction="row"  sx={{mt:2, display:"flex", alignItems:"center"}} >
+                <Checkbox onChange={selecionarTudo} defaultChecked/>
+                <span>Selecionar tudo</span>
+              </Stack>
+              {
+                ordem === "nulo" ? 
+                  <IconButton onClick={ordemDesc}>
+                    <CompressIcon/>
+                  </IconButton>
+                :
+                ordem === "desc" ?
+                  <IconButton onClick={ordemAsc}>
+                    <ArrowUpwardIcon/>
+                  </IconButton>
+                :
+                  <IconButton onClick={ordemNula}>
+                    <ArrowDownwardIcon/>
+                  </IconButton>    
+              }
+            </div>
             <Contas 
-                Mes={Mes}
+                Mes={listaDeContas}
                 atual={atual}
                 disp={disp}
                 handleAtualiza={handleAtualiza}
@@ -104,6 +152,7 @@ export default function HomeBody({id}:{id:string}) {
             />
           </div>
           <div className='subAppBar'>
+            <h3 style={{textAlign:"center"}}>{Mes.Ano}</h3>
             <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"20px"}}>
               <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={mesRef === 0 ? true : false}>
                 <ArrowBackIosNewIcon />
@@ -116,10 +165,13 @@ export default function HomeBody({id}:{id:string}) {
             <div style={{display:"flex", justifyContent:"center", alignItems:"center",width:"100%", background:""}}>
               <div style={{marginBottom:15, marginTop:5}}>
                 <div style={{textAlign:"center", color:"grey", fontSize:12}}>Sobrou</div>
-                <h2 style={{textAlign:"center", margin:0, color:somaValores(Mes.contas) < "0" ? "red" : ""}}>
-                  {somaValores(Mes.contas)}            
+                <h2 style={{textAlign:"center", margin:0, color:somaValores(listaDeContas) < "0" ? "red" : ""}}>
+                  {somaValores(listaDeContas)}            
                 </h2>
                 <div style={{color:resultados.cor, textAlign:"center"}}>
+                  <div style={{display:"flex", justifyContent:"center"}}>
+                      {Emoji(getPorcentagem(resultados.porcentagem))}
+                  </div>
                   {
                     resultados.cor === "red" ? "Você esta no vermelho":"Suas dívidas estão comprometendo " + resultados.porcentagem + " do seu salário"
                   }
@@ -150,7 +202,7 @@ export default function HomeBody({id}:{id:string}) {
               <div style={{marginBottom:15, marginTop:5}}>
                 <div style={{textAlign:"center", color:"grey", fontSize:12}}>Sobrou</div>
                 <h2 style={{textAlign:"center", margin:0, color:somaValores(Mes.contas) < "0" ? "red" : ""}}>
-                  {somaValores(Mes.contas)}            
+                  {somaValores(listaDeContas)}            
                 </h2>
                 <div style={{color:resultados.cor, textAlign:"center"}}>
                   {
@@ -175,7 +227,7 @@ export default function HomeBody({id}:{id:string}) {
               <span>Selecionar tudo</span>
             </Stack>
             <Contas 
-                Mes={Mes}
+                Mes={listaDeContas}
                 atual={atual}
                 disp={disp}
                 handleAtualiza={handleAtualiza}

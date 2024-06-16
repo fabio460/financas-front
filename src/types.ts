@@ -28,6 +28,7 @@ export type mesType2 = {
     contas:contasType[]
     idDoUsuario:string
     mesReferente:string
+    Ano:number
     numero:number
 }
 
@@ -35,6 +36,7 @@ export type mesType ={
     id: string
     idDoUsuario:string
     mesReferente:string
+    Ano:number
     contas_A_Pagar:{
         id:string
         nome:string

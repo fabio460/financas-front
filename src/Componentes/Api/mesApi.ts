@@ -13,14 +13,14 @@ export const listarMesApi = async(id:string)=>{
     })
     return response;
 }
-export const adicionarMesApi = async(idDoUsuario:string, mesReferente:string)=>{
+export const adicionarMesApi = async(idDoUsuario:string, mesReferente:string, Ano?:number)=>{
     let response = "" 
     await fetch(link+"mes/adicionarMes",{
      headers:{
          "Content-Type":"application/json"
      },
      method:"post",
-     body:JSON.stringify({idDoUsuario, mesReferente})
+     body:JSON.stringify({idDoUsuario, mesReferente, Ano})
     })
     .then(r=>r.json())
     .then(r=>{
@@ -46,14 +46,14 @@ export const deletarMesApi = async(id:string)=>{
 }
 
 
-export const atualizarMesApi = async(id:string, idDoUsuario:string, mesReferente:string)=>{
+export const atualizarMesApi = async(id:string, idDoUsuario:string, mesReferente:string, Ano?:number)=>{
     let response = "" 
     await fetch(link+"mes/atualizarMes",{
      headers:{
          "Content-Type":"application/json"
      },
      method:"put",
-     body:JSON.stringify({id, idDoUsuario, mesReferente})
+     body:JSON.stringify({id, idDoUsuario, mesReferente, Ano})
     })
     .then(r=>r.json())
     .then(r=>{

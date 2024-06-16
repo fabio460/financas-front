@@ -90,7 +90,7 @@ export default function ModalAdicionarConta({handleAtualiza,mes}:{handleAtualiza
       {/* <IconButton  onClick={handleClickOpen}>
         <AddIcon/>
       </IconButton> */}
-      <Chip label="Adicionar canta" onClick={handleClickOpen} />
+      <Chip label="Adicionar canta" onClick={handleClickOpen} color='success'/>
 
       <Dialog
         open={open}

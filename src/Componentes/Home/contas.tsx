@@ -1,9 +1,9 @@
-import React from 'react'
-import { mesType2 } from '../../types'
+import React, { useState } from 'react'
+import { contasType, mesType2 } from '../../types'
 import { Avatar, Checkbox, Divider, ListItem, ListItemAvatar, ListItemText } from '@mui/material'
-import { corDosItens, corVerde, corVermelho } from '../Cores'
+import { corDizimo, corDosItens, corVerde, corVermelho } from '../Cores'
 import BtnLoading from '../btnLoading'
-import { formatoMonetario, ignoreMaiusMinusAcent } from '../../metodosUteis'
+import { formatoMonetario, ignoreMaiusMinusAcent, ordenaListaPorValor } from '../../metodosUteis'
 import WorkIcon from '@mui/icons-material/Work';
 import PropaneTankIcon from '@mui/icons-material/PropaneTank';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
@@ -15,21 +15,22 @@ import CreditCardIcon from '@mui/icons-material/CreditCard';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import FadeMenu from './menu'
 
-export default function Contas({Mes, atual, disp, handleAtualiza, handleChecked, carregandoBtn, setAtualizarRedux}:{Mes?:mesType2, handleChecked?:any, handleAtualiza?:any, disp?:any, atual?:any, carregandoBtn:any, setAtualizarRedux:any}) {
+export default function Contas({Mes, atual, disp, handleAtualiza, handleChecked, carregandoBtn, setAtualizarRedux}:{Mes?:contasType[], handleChecked?:any, handleAtualiza?:any, disp?:any, atual?:any, carregandoBtn:any, setAtualizarRedux:any}) {
+ 
   return (
     <div className='listaContas'>
     {
-      Mes?.contas.map((c, keyC)=>{
+      Mes?.map((c, keyC)=>{
         return <div key={keyC}>
           <div>
             <ListItem sx={{p:0, display:""}}>
                 <div style={{display:"flex", justifyContent:"space-between", width:"100%", alignItems:"center"}}>
                     {
                       (carregandoBtn.id === c.id && carregandoBtn.sel) ? <BtnLoading marginV={"8.5"}/>:
-                      <Checkbox checked={c.selecionado} onChange={e=> handleChecked(c.id)}/>
+                      <Checkbox checked={c.selecionado} onChange={e=> handleChecked(c.id)} disabled={c.id === "" && true}/>
                     }
                     <ListItemAvatar>
-                        <Avatar sx={{bgcolor:c.tipo === "entrada" ? corVerde : corVermelho}}> 
+                        <Avatar sx={{bgcolor:c.tipo === "entrada" ? corVerde : c.id === "" ? corDizimo : corVermelho}}> 
                             {
                             ignoreMaiusMinusAcent(c.nome).includes(("cartao")) || ignoreMaiusMinusAcent(c.nome).includes(("fatura")) ? <CreditCardIcon  />:
                             ignoreMaiusMinusAcent(c.nome).includes("aluguel") ? <MapsHomeWorkIcon />:   
@@ -43,11 +44,10 @@ export default function Contas({Mes, atual, disp, handleAtualiza, handleChecked,
                             }
                         </Avatar>
                     </ListItemAvatar>
-                    {/* <ListItemText primary={c.nome} secondary={formatoMonetario(c.valor)} color='error'/> */}
                     <ListItemText>
                         <div>
                             <div>{c.nome}</div>
-                            <div style={{color:c.tipo==="entrada"? corVerde : corVermelho , fontSize:12}}>{formatoMonetario(c.valor)}</div>
+                            <div style={{color:c.tipo==="entrada"? corVerde : c.id === "" ? corDizimo: corVermelho , fontSize:12}}>{formatoMonetario(c.valor)}</div>
                         </div>
                     </ListItemText>
                 </div>
