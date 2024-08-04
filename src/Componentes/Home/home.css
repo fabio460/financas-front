@@ -44,7 +44,13 @@
 .ListaDeContas{
    display: block;
 }
+.itemBodyMobile{
+   display: none;
+}
 @media (max-width:500px) {
+   .itemBodyMobile{
+      display: block;
+   }
    .subAppBarMobile{
       display: block;
    }

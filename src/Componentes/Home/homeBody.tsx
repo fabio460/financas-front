@@ -4,7 +4,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import "./home.css"
-import { calculos, formatoMonetario, getPorcentagem, ignoreMaiusMinusAcent, ordenaLista, ordenaListaPorValor, somaEntradas, somaSaidas, somaValores } from '../../metodosUteis';
+import { calculos, filtrarContaDeCartoes, formatoMonetario, getPorcentagem, ignoreMaiusMinusAcent, ordenaLista, ordenaListaPorValor, somaEntradas, somaSaidas, somaValores } from '../../metodosUteis';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { Avatar, Checkbox, IconButton, Stack } from '@mui/material';
 import { corDosItens, corVerde, corVermelho} from '../Cores';
@@ -114,6 +114,7 @@ export default function HomeBody({id}:{id:string}) {
     }
     return <div></div>
   }
+  const gastosDoCartaoDeCred =filtrarContaDeCartoes(listaDeContas)
   return (
     <div className='contasContainer'> 
       {
@@ -186,6 +187,7 @@ export default function HomeBody({id}:{id:string}) {
             <div style={{display:"flex",alignItems:"center", flexDirection:"column",marginTop:"20px"}}>
               <div style={{color:corVerde}}>Entradas: {formatoMonetario(somaEntradas(Mes.contas))}</div>
               <div  style={{color:corVermelho}}> Saídas: {formatoMonetario(somaSaidas(Mes.contas))}</div>
+              <div>Gastos com cartôes de crédito {gastosDoCartaoDeCred}</div>
             </div>
           </div>
           <div className='subAppBarMobile'>
@@ -217,10 +219,12 @@ export default function HomeBody({id}:{id:string}) {
               <ModalAdicionarMes id={id}/>
             </Stack>
           </div>
-          <div style={{display:"flex",alignItems:"center", flexDirection:"column",marginTop:"20px"}}>
+          <div className='itemBodyMobile' style={{display:"flex",alignItems:"center", flexDirection:"column",marginTop:"20px"}}>
               <div style={{color:corVerde}}>Entradas: {formatoMonetario(somaEntradas(Mes.contas))}</div>
               <div  style={{color:corVermelho}}> Saídas: {formatoMonetario(somaSaidas(Mes.contas))}</div>
-            </div>
+              <div>Gastos com cartôes de crédito {gastosDoCartaoDeCred}</div>
+          </div>
+          <div></div>
           <div className='ListaDeContasMobile'>
             <Stack direction="row"  sx={{mt:2, display:"flex", alignItems:"center"}} >
               <Checkbox onChange={selecionarTudo} defaultChecked/>

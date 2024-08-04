@@ -197,3 +197,15 @@ export const ordenaListaPorValor = (listaBruta:contasType[], ordem:string)=>{
 export const getPorcentagem = (valor:string)=>{
     return parseInt(valor.split(".")[0])
 } 
+
+export const filtrarContaDeCartoes = (listaDeContas:contasType[])=>{
+    const lista = listaDeContas.filter((e,key)=>{
+        if (e.nome.toLocaleLowerCase().includes("cart") || e.nome.toLocaleLowerCase().includes("cred")) {
+            return e
+        }
+    })
+    const valores = lista.reduce((acc, elem)=>{
+        return acc+=(elem.valor)
+    },0)
+    return formatoMonetario(valores)
+} 
