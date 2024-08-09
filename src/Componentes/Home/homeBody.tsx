@@ -17,6 +17,13 @@ import ModalAdicionarMes from './Modais/modalAdicionarMes';
 import CompressIcon from '@mui/icons-material/Compress';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { emojiAmareloNormal, emojiLaranjaPreocupado, emojiVerdeFeliz, emojiVermelhoTriste } from './emojis';
+
+import Accordion from '@mui/material/Accordion';
+import AccordionActions from '@mui/material/AccordionActions';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Button from '@mui/material/Button';
 export default function HomeBody({id}:{id:string}) {
   const [mes, setMes] = useState<mesType[]>([])
   const [mesRef, setMesRef] = useState(localStorage.getItem("step")?parseInt(localStorage.getItem("step") as string):0)
@@ -190,40 +197,45 @@ export default function HomeBody({id}:{id:string}) {
               <div>Gastos com cartôes de crédito {gastosDoCartaoDeCred}</div>
             </div>
           </div>
-          <div className='subAppBarMobile'>
-            <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"20px"}}>
-              <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={mesRef === 0 ? true : false}>
-                <ArrowBackIosNewIcon />
-              </IconButton>
-              <div style={{textAlign:"center", width:"90px"}}> {Mes?.mesReferente} </div>
-              <IconButton sx={{color:corDosItens}} onClick={proximo} disabled={mesRef === (usuario.mes.length - 1) ? true : false}>
-                <ArrowForwardIosIcon/>
-              </IconButton>
-            </div>
-            <div style={{display:"flex", justifyContent:"center", alignItems:"center",width:"100%", background:""}}>
-              <div style={{marginBottom:15, marginTop:5}}>
-                <div style={{textAlign:"center", color:"grey", fontSize:12}}>Sobrou</div>
-                <h2 style={{textAlign:"center", margin:0, color:somaValores(Mes.contas) < "0" ? "red" : ""}}>
-                  {somaValores(listaDeContas)}            
-                </h2>
-                <div style={{color:resultados.cor, textAlign:"center"}}>
-                  {
-                    resultados.cor === "red" ? "Você esta no vermelho":"Suas dívidas estão comprometendo " + resultados.porcentagem + " do seu salário"
-                  }
+          {/* <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"20px"}}>
+            <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={mesRef === 0 ? true : false}>
+              <ArrowBackIosNewIcon />
+            </IconButton>
+            <div style={{textAlign:"center", width:"90px"}}> {Mes?.mesReferente} </div>
+            <IconButton sx={{color:corDosItens}} onClick={proximo} disabled={mesRef === (usuario.mes.length - 1) ? true : false}>
+              <ArrowForwardIosIcon/>
+            </IconButton>
+          </div> */}
+          <AccordionUsage listaDeContas={listaDeContas} Mes={Mes} anterior={anterior} mesRef={mesRef} proximo={proximo} usuario={usuario}>
+            <div>
+              <div className='subAppBarMobile'>
+                <div style={{display:"flex", justifyContent:"center", alignItems:"center",width:"100%", background:""}}>
+                  <div style={{marginBottom:15, marginTop:5}}>
+                    {/* <div style={{textAlign:"center", color:"grey", fontSize:12}}>Sobrou</div>
+                    <h2 style={{textAlign:"center", margin:0, color:somaValores(Mes.contas) < "0" ? "red" : ""}}>
+                      {somaValores(listaDeContas)}            
+                    </h2> */}
+                    <div style={{color:resultados.cor, textAlign:"center"}}>
+                      {
+                        resultados.cor === "red" ? "Você esta no vermelho":"Suas dívidas estão comprometendo " + resultados.porcentagem + " do seu salário"
+                      }
+                    </div>
+                  </div>
                 </div>
+                <Stack direction="row" spacing={1} sx={{ml:"0%"}} className='stack'>
+                  <ModalAdicionarConta mes={Mes} handleAtualiza={handleAtualiza}/>
+                  <ModalDeletarMes idMes={Mes.id as string} />
+                  <ModalAdicionarMes id={id}/>
+                </Stack>
               </div>
+            <div className='itemBodyMobile' style={{display:"flex",alignItems:"center", flexDirection:"column",marginTop:"20px"}}>
+                <div style={{color:corVerde}}>Entradas: {formatoMonetario(somaEntradas(Mes.contas))}</div>
+                <div  style={{color:corVermelho}}> Saídas: {formatoMonetario(somaSaidas(Mes.contas))}</div>
+                <div>Gastos com cartôes de crédito {gastosDoCartaoDeCred}</div>
             </div>
-            <Stack direction="row" spacing={1} sx={{ml:"0%"}} className='stack'>
-              <ModalAdicionarConta mes={Mes} handleAtualiza={handleAtualiza}/>
-              <ModalDeletarMes idMes={Mes.id as string} />
-              <ModalAdicionarMes id={id}/>
-            </Stack>
-          </div>
-          <div className='itemBodyMobile' style={{display:"flex",alignItems:"center", flexDirection:"column",marginTop:"20px"}}>
-              <div style={{color:corVerde}}>Entradas: {formatoMonetario(somaEntradas(Mes.contas))}</div>
-              <div  style={{color:corVermelho}}> Saídas: {formatoMonetario(somaSaidas(Mes.contas))}</div>
-              <div>Gastos com cartôes de crédito {gastosDoCartaoDeCred}</div>
-          </div>
+
+            </div>
+          </AccordionUsage>
           <div></div>
           <div className='ListaDeContasMobile'>
             <Stack direction="row"  sx={{mt:2, display:"flex", alignItems:"center"}} >
@@ -246,3 +258,60 @@ export default function HomeBody({id}:{id:string}) {
   );
 }
   
+function AccordionUsage({children, anterior, Mes, mesRef, proximo, usuario, listaDeContas}:{children:any,listaDeContas:any, anterior:any,mesRef:any, Mes:any, proximo:any, usuario:any}) {
+  return (
+    <div>
+      
+      {/* <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1-content"
+          id="panel1-header"
+        >
+          Accordion 1
+        </AccordionSummary>
+        <AccordionDetails>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+          malesuada lacus ex, sit amet blandit leo lobortis eget.
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2-content"
+          id="panel2-header"
+        >
+          Accordion 2
+        </AccordionSummary>
+        <AccordionDetails>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+          malesuada lacus ex, sit amet blandit leo lobortis eget.
+        </AccordionDetails>
+      </Accordion> */}
+      <Accordion defaultExpanded>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel3-content"
+          id="panel3-header"
+        >
+          <h3 style={{textAlign:"center", margin:0, color:somaValores(listaDeContas) < "0" ? "red" : ""}}>
+            Sobrou {somaValores(listaDeContas)}            
+          </h3>
+        </AccordionSummary>
+        
+        <AccordionDetails>
+          <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"0px"}}>
+            <IconButton sx={{color:corDosItens}} aria-label="delete" onClick={anterior} disabled={mesRef === 0 ? true : false}>
+              <ArrowBackIosNewIcon />
+            </IconButton>
+            <div style={{textAlign:"center", width:"90px"}}> {Mes?.mesReferente} </div>
+            <IconButton sx={{color:corDosItens}} onClick={proximo} disabled={mesRef === (usuario.mes.length - 1) ? true : false}>
+              <ArrowForwardIosIcon/>
+            </IconButton>
+          </div>
+           {children}
+        </AccordionDetails>
+      </Accordion>
+    </div>
+  );
+}
