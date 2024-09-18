@@ -84,6 +84,11 @@ export default function ModalAdicionarConta({handleAtualiza,mes}:{handleAtualiza
     setLoading(false)
     handleClose()
   }
+  const acoesDaTeclaEnter = (texto:string)=>{
+    if (texto === "Enter") {      
+      handleAdicionar()
+    }
+  }
   
   return (
     <React.Fragment>
@@ -103,8 +108,8 @@ export default function ModalAdicionarConta({handleAtualiza,mes}:{handleAtualiza
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <TextField error={nomeErro ? true : false} type='text' fullWidth  placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
-            <TextField error={valorErro ? true : false} type='text' sx={{m:"20px 0px"}} fullWidth placeholder='Valor' onChange={e=>setValor(e.target.value)}/>
+            <TextField error={nomeErro ? true : false} onKeyDown={(e)=>acoesDaTeclaEnter(e.code)} type='text' fullWidth  placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
+            <TextField error={valorErro ? true : false} onKeyDown={(e)=>acoesDaTeclaEnter(e.code)} type='text' sx={{m:"20px 0px"}} fullWidth placeholder='Valor' onChange={e=>setValor(e.target.value)}/>
             <Box sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Tipo de conta</InputLabel>

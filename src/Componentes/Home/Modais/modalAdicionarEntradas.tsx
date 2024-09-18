@@ -45,6 +45,12 @@ export default function ModalAdicionarEntradas({mes, handleAtualiza}:{mes:mesTyp
     setLoading(false)
     handleClose()
   }
+
+  const acoesDaTeclaEnter = (texto:string)=>{
+    if (texto === "Enter") {      
+      handleAdicionar()
+    }
+  }
   return (
     <React.Fragment>
       <IconButton onClick={handleClickOpen}>
@@ -61,8 +67,8 @@ export default function ModalAdicionarEntradas({mes, handleAtualiza}:{mes:mesTyp
         <DialogTitle sx={{color:corVerde}}>Entradas mês de {mes.mesReferente}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            <TextField type='text' fullWidth placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
-            <TextField type='text' sx={{mt:3}} fullWidth placeholder='Valor' onChange={e=>setValor(parseFloat(e.target.value))}/>
+            <TextField onKeyDown={(e)=>acoesDaTeclaEnter(e.code)} type='text' fullWidth placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
+            <TextField onKeyDown={(e)=>acoesDaTeclaEnter(e.code)} type='text' sx={{mt:3}} fullWidth placeholder='Valor' onChange={e=>setValor(parseFloat(e.target.value))}/>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

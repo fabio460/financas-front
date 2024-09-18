@@ -49,7 +49,11 @@ export default function ModalAdicionarMes({id}:{id:string}) {
     handleClose()
   }
   
-
+  const acoesDaTeclaEnter = (texto:string)=>{
+    if (texto === "Enter") {      
+      adicionarMes()
+    }
+  }
   const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
   return (
     <div>
@@ -76,6 +80,7 @@ export default function ModalAdicionarMes({id}:{id:string}) {
                    onChange={e=> setAno(parseInt(e.target.value))}
                    label="Ano "
                    sx={{mt:2,mb:2}}
+                   onKeyDown={(e)=>acoesDaTeclaEnter(e.code)}
               />
               <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label"></InputLabel>
@@ -85,6 +90,7 @@ export default function ModalAdicionarMes({id}:{id:string}) {
                       value={Mes}
                       label=""
                       onChange={handleChange}
+                      onKeyDown={(e)=>acoesDaTeclaEnter(e.code)}
                   >
                       {
                           meses.map((elem, key)=>{

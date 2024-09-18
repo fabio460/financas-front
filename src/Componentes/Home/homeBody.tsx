@@ -206,36 +206,39 @@ export default function HomeBody({id}:{id:string}) {
               <ArrowForwardIosIcon/>
             </IconButton>
           </div> */}
-          <AccordionUsage listaDeContas={listaDeContas} Mes={Mes} anterior={anterior} mesRef={mesRef} proximo={proximo} usuario={usuario}>
-            <div>
-              <div className='subAppBarMobile'>
-                <div style={{display:"flex", justifyContent:"center", alignItems:"center",width:"100%", background:""}}>
-                  <div style={{marginBottom:15, marginTop:5}}>
-                    {/* <div style={{textAlign:"center", color:"grey", fontSize:12}}>Sobrou</div>
-                    <h2 style={{textAlign:"center", margin:0, color:somaValores(Mes.contas) < "0" ? "red" : ""}}>
-                      {somaValores(listaDeContas)}            
-                    </h2> */}
-                    <div style={{color:resultados.cor, textAlign:"center"}}>
-                      {
-                        resultados.cor === "red" ? "Você esta no vermelho":"Suas dívidas estão comprometendo " + resultados.porcentagem + " do seu salário"
-                      }
+          <div className='subAppBarMobile'>
+
+            <AccordionUsage listaDeContas={listaDeContas} Mes={Mes} anterior={anterior} mesRef={mesRef} proximo={proximo} usuario={usuario}>
+              <div>
+                <div className='subAppBarMobile'>
+                  <div style={{display:"flex", justifyContent:"center", alignItems:"center",width:"100%", background:""}}>
+                    <div style={{marginBottom:15, marginTop:5}}>
+                      {/* <div style={{textAlign:"center", color:"grey", fontSize:12}}>Sobrou</div>
+                      <h2 style={{textAlign:"center", margin:0, color:somaValores(Mes.contas) < "0" ? "red" : ""}}>
+                        {somaValores(listaDeContas)}            
+                      </h2> */}
+                      <div style={{color:resultados.cor, textAlign:"center"}}>
+                        {
+                          resultados.cor === "red" ? "Você esta no vermelho":"Suas dívidas estão comprometendo " + resultados.porcentagem + " do seu salário"
+                        }
+                      </div>
                     </div>
                   </div>
+                  <Stack direction="row" spacing={1} sx={{ml:"0%"}} className='stack'>
+                    <ModalAdicionarConta mes={Mes} handleAtualiza={handleAtualiza}/>
+                    <ModalDeletarMes idMes={Mes.id as string} />
+                    <ModalAdicionarMes id={id}/>
+                  </Stack>
                 </div>
-                <Stack direction="row" spacing={1} sx={{ml:"0%"}} className='stack'>
-                  <ModalAdicionarConta mes={Mes} handleAtualiza={handleAtualiza}/>
-                  <ModalDeletarMes idMes={Mes.id as string} />
-                  <ModalAdicionarMes id={id}/>
-                </Stack>
+              <div className='itemBodyMobile' style={{display:"flex",alignItems:"center", flexDirection:"column",marginTop:"20px"}}>
+                  <div style={{color:corVerde}}>Entradas: {formatoMonetario(somaEntradas(Mes.contas))}</div>
+                  <div  style={{color:corVermelho}}> Saídas: {formatoMonetario(somaSaidas(Mes.contas))}</div>
+                  <div>Gastos com cartôes de crédito {gastosDoCartaoDeCred}</div>
               </div>
-            <div className='itemBodyMobile' style={{display:"flex",alignItems:"center", flexDirection:"column",marginTop:"20px"}}>
-                <div style={{color:corVerde}}>Entradas: {formatoMonetario(somaEntradas(Mes.contas))}</div>
-                <div  style={{color:corVermelho}}> Saídas: {formatoMonetario(somaSaidas(Mes.contas))}</div>
-                <div>Gastos com cartôes de crédito {gastosDoCartaoDeCred}</div>
-            </div>
 
-            </div>
-          </AccordionUsage>
+              </div>
+            </AccordionUsage>
+          </div>
           <div></div>
           <div className='ListaDeContasMobile'>
             <Stack direction="row"  sx={{mt:2, display:"flex", alignItems:"center"}} >

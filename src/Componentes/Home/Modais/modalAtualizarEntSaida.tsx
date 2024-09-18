@@ -13,6 +13,7 @@ import { atualizarContas_a_PagarApi } from '../../Api/contas_a_pagarApi';
 import { atualizarGanhos } from '../../Api/ganhosApi';
 import BtnLoading from '../../btnLoading';
 import { atualizarContasApi } from '../../Api/contasApi';
+import { trocaVirgulaPorPonto } from '../../../metodosUteis';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -26,7 +27,7 @@ const Transition = React.forwardRef(function Transition(
 export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, CloseAll,elem, close, atual, disp, setAtualizarRedux}:{id:string, CloseAll:any, tipo:string, handleAtualiza:any, close:any,elem:entradasSaidasType, disp?:any, setAtualizarRedux?:any, atual?:any}) {
   const [open, setOpen] = React.useState(false);
   const [nome, setNome] = useState(elem.nome)
-  const [valor, setValor] = useState(elem.valor)
+  const [valor, setValor] = useState<string>(elem.valor.toString())
   const [age, setAge] = React.useState(tipo === "entrada" ? "10":"20");
   const [Tipo, setTipo] = useState(tipo)
   const [loading, setLoading] = useState(false)
@@ -37,7 +38,7 @@ export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, CloseA
 
   useEffect(()=>{
     setNome(elem.nome)
-    setValor(elem.valor)
+    setValor(elem.valor.toString())
   },[])
   const handleClose = () => {
     setOpen(false);
@@ -47,13 +48,18 @@ export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, CloseA
 
   const atualizar = async ()=>{
     setLoading(true)
-    await atualizarContasApi(elem.id, nome, Tipo,valor, elem.idMes)
+    await atualizarContasApi(elem.id, nome, Tipo,trocaVirgulaPorPonto(valor.toString()), elem.idMes)
     disp(setAtualizarRedux(!atual))
     handleAtualiza()
     handleClose()
     setLoading(false)
   }
-
+  
+  const acoesDaTeclaEnter = (texto:string)=>{
+    if (texto === "Enter") {      
+      atualizar()
+    }
+  }
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
@@ -77,8 +83,8 @@ export default function ModalAtualizarEntSaida({id, tipo, handleAtualiza, CloseA
         <DialogTitle>{"Area de atualização de dados"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            <TextField defaultValue={nome.toString()} type='text' fullWidth placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
-            <TextField defaultValue={valor.toString()} type='text' sx={{m:"20px 0px"}} fullWidth placeholder='Valor' onChange={e=>setValor(parseFloat(e.target.value))}/>
+            <TextField onKeyDown={(e)=>acoesDaTeclaEnter(e.code)} defaultValue={nome.toString()} type='text' fullWidth placeholder='Nome' onChange={e=>setNome(e.target.value)}/>
+            <TextField onKeyDown={(e)=>acoesDaTeclaEnter(e.code)} defaultValue={valor.toString()} type='text' sx={{m:"20px 0px"}} fullWidth placeholder='Valor' onChange={e=>setValor(e.target.value)}/>
             <Box sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Tipo de conta</InputLabel>
