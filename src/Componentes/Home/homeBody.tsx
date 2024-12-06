@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import { contasType, mesType, usuarioType } from '../../types';
+import { contasType, mesType, mesType2, usuarioType } from '../../types';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -35,6 +35,7 @@ export default function HomeBody({id}:{id:string}) {
   }
   const search = useAppSelector(state=>state.searchReducer.search)
   let mesOrdenado = ordenaLista(mes) as mesType[]
+    
   let listaFiltrada = mesOrdenado.map(((e, key)=>{
     let contas_A_Pagar = e.contas_A_Pagar.filter(c=>{
       if (ignoreMaiusMinusAcent(c.nome).includes(ignoreMaiusMinusAcent(search))) {
@@ -62,8 +63,8 @@ export default function HomeBody({id}:{id:string}) {
     }
     getMes()
   },[atualiza])
-  let Mes = usuario.mes[mesRef]
-  
+  let MesesOrdenados = ordenaLista(usuario.mes)
+  let Mes:mesType | mesType2 = MesesOrdenados[mesRef] as mesType2
   const proximo = ()=>{
     if (mesRef < ( usuario.mes.length - 1)) {      
       localStorage.setItem("step",JSON.stringify(mesRef + 1))
@@ -122,6 +123,7 @@ export default function HomeBody({id}:{id:string}) {
     return <div></div>
   }
   const gastosDoCartaoDeCred =filtrarContaDeCartoes(listaDeContas)
+  
   return (
     <div className='contasContainer'> 
       {

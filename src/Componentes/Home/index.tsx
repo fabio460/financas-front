@@ -19,7 +19,8 @@ export default function Home() {
 
   const [dark, setDark] = useState<any>(localStorage.getItem("dark") ? localStorage.getItem("dark"):false)
   const usuario:usuarioLogadoType = useAppSelector(state=>state.usuarioAutenticadoReducer.usuario)
-
+  
+  
   return (
     <ThemeProvider theme={dark && darkTheme}>
     <CssBaseline />

@@ -1,5 +1,5 @@
 import { green, red } from "@mui/material/colors";
-import { contasType, entradasSaidasType, mesType } from "./types";
+import { contasType, entradasSaidasType, mesType, mesType2 } from "./types";
 import ImageIcon from '@mui/icons-material/Image';
 
 export const emailValido = (email:string)=>{
@@ -57,8 +57,8 @@ export function getSobra(entradas:entradasSaidasType[], saidas:entradasSaidasTyp
 export const ignoreMaiusMinusAcent = (nome:string)=>{
    return nome.toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 }
-export const ordenaLista = (mes:mesType[])=>{
-   const mesAdd = mes.map(e=>{
+export const ordenaLista = (mes:mesType2[] | mesType[])=>{
+    const mesAdd = mes.map(e=>{
     switch (e.mesReferente) {
         case "Janeiro":
             return {num:1,e} 
@@ -94,7 +94,7 @@ export const ordenaLista = (mes:mesType[])=>{
     return (a?.num as number) < (b?.num as number) ? -1 : (a?.num as number) > (b?.num as number) ? 1 : 0
    })
    const ordenadoPoAno = ordenado.sort((a:any,b:any)=>{
-    return a?.e.Ano < b?.e.Ano ? 1 : a?.e.Ano > b?.e.Ano ? -1 : 0
+    return a?.e.Ano < b?.e.Ano ? -1 : a?.e.Ano > b?.e.Ano ? 1 : 0
    })
    return ordenadoPoAno.map(e=>{
     return e?.e
